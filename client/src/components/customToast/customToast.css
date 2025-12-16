@@ -1,0 +1,35 @@
+/* customToast.css */
+.toast-overlay {
+  pointer-events: auto !important;
+  background: rgba(0, 0, 0, 0.4); /* semi-transparent background */
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999; /* make sure it’s above everything */
+}
+
+.comment-toast {
+  pointer-events: auto;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 8px;
+  min-width: 300px;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.toast-screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  z-index: 9998; /* below toast but above page */
+  pointer-events: auto;
+}

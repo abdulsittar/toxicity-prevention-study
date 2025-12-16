@@ -1,0 +1,20 @@
+.webview-toast-container {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: auto !important;     /* BLOCK CLICK THROUGH */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+}
+
+.Toastify__toast {
+  pointer-events: auto !important;     /* VERY IMPORTANT */
+}
+
+.Toastify__toast-body {
+  pointer-events: auto !important;     /* ALSO IMPORTANT */
+}
