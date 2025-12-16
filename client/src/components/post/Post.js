@@ -71,25 +71,18 @@ function Post({onScrolling,  post, classes, isDetail, setHasReadArticle, current
   const [pendingComment, setPendingComment] = useState(null);
   const [pendingParaphrase, setPendingParaphrase] = useState("");
   const [pendingFeedback, setPendingFeedback] = useState({});
-  
   const [currentPost, setCurrentPost] = useState(post);
-
   const [repost, setRepost] = useState(post.reposts? post.reposts.length: 0);
   const [repostUser, setRepostUser] = useState({});
   const [repostId, setRepostId] = useState(post.reposts[post.reposts? post.reposts.length: 0]); 
-  
-  const [rank, setRank] = useState(parseFloat(post.rank.toFixed(2))); 
 
+  const [rank, setRank] = useState(parseFloat(post.rank.toFixed(2))); 
   const [isReposted, setIsReposted] = useState(false);
   const [webViewVisible, setWebViewVisible] = useState(false);
-const [webViewUrl, setWebViewUrl] = useState('');
-
-  
+  const [webViewUrl, setWebViewUrl] = useState('');
   const [isNew, setIsNew] = useState(false);
-
   const [user, setUser] = useState({});
   const [text, setText] = useState('');
-  
   const [webLink, setWebLink] = useState(post.webLinks);
   const [inputValue, setInputValue] = useState("");
   const linkify = linkifyit();
@@ -469,7 +462,7 @@ setProgress(30);
     // Regular expression to match HTML tags
     const htmlRegex = /<[^>]*>/g;
     
-    // Remove HTML tags from the text  "https://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included"
+    // Remove HTML tags from the text  "https://socialapp.ijs.si/news/zelensky-ukraine-must-be-included"
     const textWithoutHtml = text.replace(htmlRegex, '');
     
     return textWithoutHtml;

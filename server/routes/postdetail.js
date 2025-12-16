@@ -27,6 +27,29 @@
       apiKey: process.env.OPENAI_API_KEY,
     });
 
+
+function cleanFeedback(feedback = {}) {
+  const REMOVE_PATTERNS = [
+    /^no issues?\.?$/i,
+    /^no .*issues?\.?$/i,
+    /^no .*present\.?$/i,
+    /^no .*detected\.?$/i, 
+    /^none\.?$/i,
+    /^$/ // empty string
+  ];
+
+  return Object.fromEntries(
+    Object.entries(feedback).filter(([_, value]) => {
+      if (typeof value !== "string") return false;
+
+      const trimmed = value.trim();
+      if (!trimmed) return false;
+
+      return !REMOVE_PATTERNS.some((regex) => regex.test(trimmed));
+    })
+  );
+}
+
 // POST /api/paraphrase
 router.post("/paraphrase", verifyToken, async (req, res) => {
   const { text } = req.body;
@@ -81,7 +104,12 @@ Return JSON only, with this exact shape:
 
     const { paraphrasedText, feedback } = JSON.parse(llmMessage);
 
-    res.status(200).json({ paraphrasedText, feedback });
+    const cleanedFeedback = cleanFeedback(feedback);
+
+  res.status(200).json({
+      paraphrasedText,
+      feedback: cleanedFeedback
+    });
 
   } catch (err) {
     console.error(err);
