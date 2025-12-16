@@ -1184,16 +1184,16 @@
                     ];
 
                     webLinksPosts = [
-                        "https://socialapp2.ijs.si/news/news_4",        // neutral_ukraine
-                        "https://socialapp2.ijs.si/news/news_8",        // neutral_general
-                        "https://socialapp2.ijs.si/news/breaking_5",    // light_ukraine
-                        "https://socialapp2.ijs.si/news/news_9",        // neutral_tainment
+                        "https://socialapp.ijs.si/news/news_4",        // neutral_ukraine
+                        "https://socialapp.ijs.si/news/news_8",        // neutral_general
+                        "https://socialapp.ijs.si/news/breaking_5",    // light_ukraine
+                        "https://socialapp.ijs.si/news/news_9",        // neutral_tainment
                         "",                                              // mixed
                         "",                                              // neutral
-                        "https://socialapp2.ijs.si/news/breaking_8",    // neutral_sports
+                        "https://socialapp.ijs.si/news/breaking_8",    // neutral_sports
                         "",                                              // pro russia
                         "",                                              // neutral
-                        "https://socialapp2.ijs.si/news/uncensoredtruth_1", // disinfo_ukraine
+                        "https://socialapp.ijs.si/news/uncensoredtruth_1", // disinfo_ukraine
                         "",                                              // neutral
                         ""                                               // pro ukraine
                     ];
@@ -1276,15 +1276,15 @@
                         ];
 
                         webLinksPosts = [
-                            "https://socialapp2.ijs.si/news/breaking_7",  // disinfo_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_1",  // light_ukraine
+                            "https://socialapp.ijs.si/news/breaking_7",  // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/breaking_1",  // light_ukraine
                             "",                                           // mixed
-                            "https://socialapp2.ijs.si/news/news_4",      // pro russia
-                            "https://socialapp2.ijs.si/news/breaking_6",  // pro ukraine
-                            "https://socialapp2.ijs.si/news/news_6",      // neutral_ukraine
+                            "https://socialapp.ijs.si/news/news_4",      // pro russia
+                            "https://socialapp.ijs.si/news/breaking_6",  // pro ukraine
+                            "https://socialapp.ijs.si/news/news_6",      // neutral_ukraine
                             "",                                           // neutral_tainment
                             "",                                           // neutral (Lepa Brena)
-                            "https://socialapp2.ijs.si/news/news_3",      // neutral_sports
+                            "https://socialapp.ijs.si/news/news_3",      // neutral_sports
                             "",                                           // neutral_general
                             "",                                           // neutral (EXIT)
                             ""                                            // neutral (Zvezda)
@@ -1355,17 +1355,17 @@
                         ];
 
                         webLinksPosts = [
-                            "https://socialapp2.ijs.si/news/breaking_6",  // pro ukraine
-                            "https://socialapp2.ijs.si/news/news_6",      // neutral_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_1",  // light_ukraine
-                            "https://socialapp2.ijs.si/news/news_4",      // pro russia
+                            "https://socialapp.ijs.si/news/breaking_6",  // pro ukraine
+                            "https://socialapp.ijs.si/news/news_6",      // neutral_ukraine
+                            "https://socialapp.ijs.si/news/breaking_1",  // light_ukraine
+                            "https://socialapp.ijs.si/news/news_4",      // pro russia
                             "",                                           // mixed
                             "",                                           // neutral (Lepa Brena)
                             "",                                           // neutral_tainment
                             "",                                           // neutral (EXIT)
                             "",                                           // neutral_general
-                            "https://socialapp2.ijs.si/news/news_3",      // neutral_sports
-                            "https://socialapp2.ijs.si/news/breaking_7",  // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/news_3",      // neutral_sports
+                            "https://socialapp.ijs.si/news/breaking_7",  // disinfo_ukraine
                             ""                                            // neutral (Zvezda)
                         ];
 
@@ -1439,12 +1439,12 @@
                             "",                                           // mixed
                             "",                                           // neutral_tainment
                             "",                                           // neutral (EXIT)
-                            "https://socialapp2.ijs.si/news/news_4",      // pro russia
-                            "https://socialapp2.ijs.si/news/news_3",      // neutral_sports
-                            "https://socialapp2.ijs.si/news/breaking_1",  // light_ukraine
-                            "https://socialapp2.ijs.si/news/news_6",      // neutral_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_7",  // disinfo_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_6"   // pro ukraine
+                            "https://socialapp.ijs.si/news/news_4",      // pro russia
+                            "https://socialapp.ijs.si/news/news_3",      // neutral_sports
+                            "https://socialapp.ijs.si/news/breaking_1",  // light_ukraine
+                            "https://socialapp.ijs.si/news/news_6",      // neutral_ukraine
+                            "https://socialapp.ijs.si/news/breaking_7",  // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/breaking_6"   // pro ukraine
                         ];
 
                         ukraineScore = [
@@ -1513,15 +1513,15 @@
                         ];
 
                         webLinksPosts = [
-                            "https://socialapp2.ijs.si/news/news_5",         // neutral_ukraine
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_2", // light_ukraine
+                            "https://socialapp.ijs.si/news/news_5",         // neutral_ukraine
+                            "https://socialapp.ijs.si/news/uncensoredtruth_2", // light_ukraine
                             "",                                              // pro ukraine
                             "",                                              // pro russia
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_4", // disinfo_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_8",     // neutral_sports
+                            "https://socialapp.ijs.si/news/uncensoredtruth_4", // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/breaking_8",     // neutral_sports
                             "",                                              // mixed
-                            "https://socialapp2.ijs.si/news/news_9",         // neutral_tainment
-                            "https://socialapp2.ijs.si/news/news_8",         // neutral_general
+                            "https://socialapp.ijs.si/news/news_9",         // neutral_tainment
+                            "https://socialapp.ijs.si/news/news_8",         // neutral_general
                             "",                                              // neutral (Lepa Brena)
                             "",                                              // neutral (EXIT)
                             ""                                               // neutral (Zvezda)
@@ -1591,18 +1591,18 @@
                         ];
 
                         webLinksPosts = [
-                            "https://socialapp2.ijs.si/news/news_8",         // neutral_general
+                            "https://socialapp.ijs.si/news/news_8",         // neutral_general
                             "",                                              // neutral (Lepa Brena)
                             "",                                              // neutral (EXIT)
                             "",                                              // mixed
-                            "https://socialapp2.ijs.si/news/breaking_8",     // neutral_sports
+                            "https://socialapp.ijs.si/news/breaking_8",     // neutral_sports
                             "",                                              // pro russia
-                            "https://socialapp2.ijs.si/news/news_9",         // neutral_tainment
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_4", // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/news_9",         // neutral_tainment
+                            "https://socialapp.ijs.si/news/uncensoredtruth_4", // disinfo_ukraine
                             "",                                              // neutral (Zvezda)
                             "",                                              // pro ukraine
-                            "https://socialapp2.ijs.si/news/news_5",         // neutral_ukraine
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_2"  // light_ukraine
+                            "https://socialapp.ijs.si/news/news_5",         // neutral_ukraine
+                            "https://socialapp.ijs.si/news/uncensoredtruth_2"  // light_ukraine
                         ];
 
                         ukraineScore = [
@@ -1669,17 +1669,17 @@
                         ];
 
                         webLinksPosts = [
-                            "https://socialapp2.ijs.si/news/news_5",         // neutral_ukraine
+                            "https://socialapp.ijs.si/news/news_5",         // neutral_ukraine
                             "",                                              // pro ukraine
                             "",                                              // neutral (Brena)
-                            "https://socialapp2.ijs.si/news/news_8",         // neutral_general
+                            "https://socialapp.ijs.si/news/news_8",         // neutral_general
                             "",                                              // mixed
-                            "https://socialapp2.ijs.si/news/breaking_8",     // neutral_sports
+                            "https://socialapp.ijs.si/news/breaking_8",     // neutral_sports
                             "",                                              // neutral (EXIT)
                             "",                                              // pro russia
-                            "https://socialapp2.ijs.si/news/news_9",         // neutral_tainment
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_2", // light_ukraine
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_4", // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/news_9",         // neutral_tainment
+                            "https://socialapp.ijs.si/news/uncensoredtruth_2", // light_ukraine
+                            "https://socialapp.ijs.si/news/uncensoredtruth_4", // disinfo_ukraine
                             ""                                               // neutral (Zvezda)
                         ];
 
@@ -1743,12 +1743,12 @@
                         "",
                         "",
                         "",
-                        "https://socialapp2.ijs.si/news/news_1", // http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/news_5", // http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/uncensoredtruth_2", // http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/news_10", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/news_7", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/breaking_9", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_1", // http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_5", // http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/uncensoredtruth_2", // http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_10", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_7", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/breaking_9", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
                     ];
 
                     contents = [
@@ -1794,12 +1794,12 @@
                         "",
                         "",
                         "",
-                        "https://socialapp2.ijs.si/news/news_5", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/uncensoredtruth_2",//http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/uncensoredtruth_4", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/news_9", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/news_8", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/breaking_8", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_5", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/uncensoredtruth_2",//http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/uncensoredtruth_4", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_9", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_8", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/breaking_8", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
                     ];
 
                     contents = [
@@ -1872,15 +1872,15 @@
 
                     webLinksPosts = [
                         "",                                           // pro ukraine
-                        "https://socialapp2.ijs.si/news/breaking_6", // neutral_general
-                        "https://socialapp2.ijs.si/news/breaking_4", // light_ukraine
+                        "https://socialapp.ijs.si/news/breaking_6", // neutral_general
+                        "https://socialapp.ijs.si/news/breaking_4", // light_ukraine
                         "",                                           // mixed
-                        "https://socialapp2.ijs.si/news/breaking_7", // neutral_sports
-                        "https://socialapp2.ijs.si/news/uncensoredtruth_3", // disinfo_ukraine
-                        "https://socialapp2.ijs.si/news/news_2",     // neutral_ukraine
+                        "https://socialapp.ijs.si/news/breaking_7", // neutral_sports
+                        "https://socialapp.ijs.si/news/uncensoredtruth_3", // disinfo_ukraine
+                        "https://socialapp.ijs.si/news/news_2",     // neutral_ukraine
                         "",                                           // neutral (Partizan)
                         "",                                           // pro russia
-                        "https://socialapp2.ijs.si/news/news_6",     // neutral_tainment
+                        "https://socialapp.ijs.si/news/news_6",     // neutral_tainment
                         "",                                           // neutral (Film)
                         ""                                            // neutral (Đoković again)
                     ];
@@ -1960,12 +1960,12 @@
                             "",                                           // neutral_tainment
                             "",                                           // mixed
                             "",                                           // neutral (Zvezda)
-                            "https://socialapp2.ijs.si/news/news_3",      // neutral_sports
-                            "https://socialapp2.ijs.si/news/news_4",      // pro russia
-                            "https://socialapp2.ijs.si/news/breaking_6",  // pro ukraine
-                            "https://socialapp2.ijs.si/news/news_6",      // neutral_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_7",  // disinfo_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_1"   // light_ukraine
+                            "https://socialapp.ijs.si/news/news_3",      // neutral_sports
+                            "https://socialapp.ijs.si/news/news_4",      // pro russia
+                            "https://socialapp.ijs.si/news/breaking_6",  // pro ukraine
+                            "https://socialapp.ijs.si/news/news_6",      // neutral_ukraine
+                            "https://socialapp.ijs.si/news/breaking_7",  // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/breaking_1"   // light_ukraine
                         ];
 
                         contents = [
@@ -2033,17 +2033,17 @@
                         ];
 
                         webLinksPosts = [
-                            "https://socialapp2.ijs.si/news/news_6",       // neutral_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_6",   // pro ukraine
-                            "https://socialapp2.ijs.si/news/breaking_1",   // light_ukraine
-                            "https://socialapp2.ijs.si/news/news_4",       // pro russia
+                            "https://socialapp.ijs.si/news/news_6",       // neutral_ukraine
+                            "https://socialapp.ijs.si/news/breaking_6",   // pro ukraine
+                            "https://socialapp.ijs.si/news/breaking_1",   // light_ukraine
+                            "https://socialapp.ijs.si/news/news_4",       // pro russia
                             "",                                            // mixed
                             "",                                            // neutral (Lepa Brena)
                             "",                                            // neutral_tainment
                             "",                                            // neutral_general
                             "",                                            // neutral (Zvezda)
-                            "https://socialapp2.ijs.si/news/news_3",       // neutral_sports
-                            "https://socialapp2.ijs.si/news/breaking_7",   // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/news_3",       // neutral_sports
+                            "https://socialapp.ijs.si/news/breaking_7",   // disinfo_ukraine
                             ""                                             // neutral (EXIT)
                         ];
 
@@ -2109,16 +2109,16 @@
                         ];
 
                         webLinksPosts = [
-                            "https://socialapp2.ijs.si/news/breaking_7",   // disinfo_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_1",   // light_ukraine
+                            "https://socialapp.ijs.si/news/breaking_7",   // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/breaking_1",   // light_ukraine
                             "",                                            // mixed
-                            "https://socialapp2.ijs.si/news/news_4",       // pro russia
-                            "https://socialapp2.ijs.si/news/breaking_6",   // pro ukraine
-                            "https://socialapp2.ijs.si/news/news_3",       // neutral_sports
+                            "https://socialapp.ijs.si/news/news_4",       // pro russia
+                            "https://socialapp.ijs.si/news/breaking_6",   // pro ukraine
+                            "https://socialapp.ijs.si/news/news_3",       // neutral_sports
                             "",                                            // neutral_tainment
                             "",                                            // neutral_general
                             "",                                            // neutral (Lepa Brena)
-                            "https://socialapp2.ijs.si/news/news_6",       // neutral_ukraine
+                            "https://socialapp.ijs.si/news/news_6",       // neutral_ukraine
                             "",                                            // neutral (Zvezda)
                             ""                                             // neutral (EXIT)
                         ];
@@ -2205,17 +2205,17 @@
                         ]
 
                         webLinksPosts = [
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_3", // neutral_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_4",        // light_ukraine
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_1", // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/uncensoredtruth_3", // neutral_ukraine
+                            "https://socialapp.ijs.si/news/breaking_4",        // light_ukraine
+                            "https://socialapp.ijs.si/news/uncensoredtruth_1", // disinfo_ukraine
                             "",                                                 // pro ukraine
                             "",                                                 // pro russia
                             "",                                                 // neutral_tainment
-                            "https://socialapp2.ijs.si/news/breaking_9",        // neutral_sports
+                            "https://socialapp.ijs.si/news/breaking_9",        // neutral_sports
                             "",                                                 // mixed
                             "",                                                 // neutral (Riblja Čorba)
-                            "https://socialapp2.ijs.si/news/news_10",           // neutral (EXIT)
-                            "https://socialapp2.ijs.si/news/news_7",            // neutral_general
+                            "https://socialapp.ijs.si/news/news_10",           // neutral (EXIT)
+                            "https://socialapp.ijs.si/news/news_7",            // neutral_general
                             ""                                                  // neutral (Novak)
                         ]
 
@@ -2283,17 +2283,17 @@
 
                         webLinksPosts = [
                             "",                                                  // Riblja Čorba
-                            "https://socialapp2.ijs.si/news/news_7",            // neutral_general
-                            "https://socialapp2.ijs.si/news/news_10",           // EXIT festival
+                            "https://socialapp.ijs.si/news/news_7",            // neutral_general
+                            "https://socialapp.ijs.si/news/news_10",           // EXIT festival
                             "",                                                  // mixed
                             "",                                                  // neutral_tainment
                             "",                                                  // pro russia
                             "",                                                  // Novak
-                            "https://socialapp2.ijs.si/news/breaking_9",        // neutral_sports
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_1", // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/breaking_9",        // neutral_sports
+                            "https://socialapp.ijs.si/news/uncensoredtruth_1", // disinfo_ukraine
                             "",                                                  // pro ukraine
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_3", // neutral_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_4"         // light_ukraine
+                            "https://socialapp.ijs.si/news/uncensoredtruth_3", // neutral_ukraine
+                            "https://socialapp.ijs.si/news/breaking_4"         // light_ukraine
                         ]
 
                         ukraineScore = [
@@ -2359,18 +2359,18 @@
                         ]
 
                         webLinksPosts = [
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_3", // neutral_ukraine
+                            "https://socialapp.ijs.si/news/uncensoredtruth_3", // neutral_ukraine
                             "",                                                 // neutral (Novak)
-                            "https://socialapp2.ijs.si/news/news_7",            // neutral_general
+                            "https://socialapp.ijs.si/news/news_7",            // neutral_general
                             "",                                                 // pro ukraine
                             "",                                                 // mixed
-                            "https://socialapp2.ijs.si/news/breaking_9",        // neutral_sports
+                            "https://socialapp.ijs.si/news/breaking_9",        // neutral_sports
                             "",                                                 // neutral_tainment
                             "",                                                 // pro russia
                             "",                                                 // neutral (Riblja Čorba)
-                            "https://socialapp2.ijs.si/news/uncensoredtruth_1", // disinfo_ukraine
-                            "https://socialapp2.ijs.si/news/breaking_4",        // light_ukraine
-                            "https://socialapp2.ijs.si/news/news_10"            // neutral (EXIT)
+                            "https://socialapp.ijs.si/news/uncensoredtruth_1", // disinfo_ukraine
+                            "https://socialapp.ijs.si/news/breaking_4",        // light_ukraine
+                            "https://socialapp.ijs.si/news/news_10"            // neutral (EXIT)
                         ]
 
                         ukraineScore = [
@@ -2436,12 +2436,12 @@
                         "",
                         "",
                         "",
-                        "https://socialapp2.ijs.si/news/news_4", // http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/news_3",// http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/breaking_1", // http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/news_6", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/breaking_7", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/breaking_6", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_4", // http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_3",// http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/breaking_1", // http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_6", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/breaking_7", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/breaking_6", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
                     ];
 
                     contents = [
@@ -2486,12 +2486,12 @@
                         "",
                         "",
                         "",
-                        "https://socialapp2.ijs.si/news/breaking_4", // http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/uncensoredtruth_1",// http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/uncensoredtruth_3", // http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/news_10", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/news_7", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
-                        "https://socialapp2.ijs.si/news/breaking_9", //http://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/breaking_4", // http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/uncensoredtruth_1",// http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/uncensoredtruth_3", // http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_10", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/news_7", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
+                        "https://socialapp.ijs.si/news/breaking_9", //http://socialapp.ijs.si/news/zelensky-ukraine-must-be-included
                     ];
 
                     contents = [
@@ -2684,7 +2684,7 @@
                 `<p>Novak Đoković gost na otvaranju teniskog kampa za klince u Novom Sadu.<br/></p>`, //keeep 
             ];
             webLinksPosts = [
-                "https://socialapp2.ijs.si/news/breaking_6",       // neutral_sports 
+                "https://socialapp.ijs.si/news/breaking_6",       // neutral_sports 
                 "",                                                // neutral (Đoković) 
             ];
 
@@ -2705,7 +2705,7 @@
 
             webLinksPosts = [ 
                 "",                                               // neutral (Lepa Brena)
-                "https://socialapp2.ijs.si/news/breaking_7",     // disinfo_ukraine 
+                "https://socialapp.ijs.si/news/breaking_7",     // disinfo_ukraine 
             ]
 
 

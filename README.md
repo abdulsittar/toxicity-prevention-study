@@ -1,4 +1,4 @@
-Website : [(https://socialapp2.ijs.si/)](https://socialapp2.ijs.si/)
+Website : [(https://socialapp.ijs.si/)](https://socialapp.ijs.si/)
 
 # TWON Social Application
 A MERN stack based social media application (MongoDB Express React Redux NodeJs).

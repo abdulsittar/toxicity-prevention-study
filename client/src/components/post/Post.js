@@ -82,7 +82,7 @@ function Post({onScrolling,  post, classes, isDetail, setHasReadArticle, current
 
   const [isReposted, setIsReposted] = useState(false);
   const [webViewVisible, setWebViewVisible] = useState(false);
-const [webViewUrl, setWebViewUrl] = useState('');
+  const [webViewUrl, setWebViewUrl] = useState('');
 
   
   const [isNew, setIsNew] = useState(false);
@@ -469,7 +469,7 @@ setProgress(30);
     // Regular expression to match HTML tags
     const htmlRegex = /<[^>]*>/g;
     
-    // Remove HTML tags from the text  "https://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included"
+    // Remove HTML tags from the text  "https://socialapp.ijs.si/news/zelensky-ukraine-must-be-included"
     const textWithoutHtml = text.replace(htmlRegex, '');
     
     return textWithoutHtml;
@@ -493,6 +493,16 @@ const triangleOverlayStyle = {
   function handleViewedChange(view, post) {
 
   }
+
+  const handleLinkClick = (url) => {
+    // Open link in a new tab since many sites block iframe embedding
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  const closeWebView = () => {
+    setWebViewVisible(false);
+    setWebViewUrl('');
+  };
  
 
   return (
@@ -548,20 +558,48 @@ const triangleOverlayStyle = {
         </div>
         
         <div className={classes.postCenter} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
-        <Linkify componentDecorator={(decoratedHref, decoratedText, key) => (<a target="blank" rel="noopener noreferrer" href={decoratedHref} key={key} > {decoratedText} </a>)}>
+          {/* Title (from desc field) - displayed in bold */}
           <div className={classes.postText}  style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
-             
-              <div className={classes.content}  style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }} dangerouslySetInnerHTML={{ __html: post?.desc }}> 
-             
-                </div> 
-            {thumbnail && (
-              <div  style={{ marginTop:"20px", background: repost>0 ? "#F5F5F5" : "#ffffff", display: 'flex', justifyContent: 'center',alignItems: 'center',}}>
-                  <img src={thumbnail} alt="Thumbnail" style={{ width: '100%', maxWidth: '600px', height: 'auto',cursor: 'default' }} />
-              </div>
+            <div className={classes.content}  style={{ 
+              fontWeight: 'bold',
+              fontSize: '16px',
+              background: repost>0 ? "#F5F5F5" : "#ffffff" 
+            }} dangerouslySetInnerHTML={{ __html: post?.desc }}> 
+            </div> 
+          </div>
+
+          {/* Link */}
+          {post?.webLinks && post.webLinks.trim() !== '' && (
+            <div style={{ 
+              marginTop: '15px', 
+              background: repost>0 ? "#F5F5F5" : "#ffffff",
+              padding: '10px',
+              borderRadius: '8px',
+              border: '1px solid #e0e0e0'
+            }}>
+              <a 
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLinkClick(post.webLinks);
+                }}
+                style={{ 
+                  color: '#1976d2', 
+                  textDecoration: 'none',
+                  fontSize: '14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  wordBreak: 'break-all'
+                }}
+              >
+                <ArrowForwardIcon style={{ fontSize: '18px', flexShrink: 0 }} />
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {post.webLinks}
+                </span>
+              </a>
+            </div>
           )}
-           </div>
-        </Linkify>
-           
         </div>
         <div className={classes.postBottom} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
           <div className={classes.postBottomLeft} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>

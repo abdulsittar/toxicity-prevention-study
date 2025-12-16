@@ -48,8 +48,8 @@ const userIdentifiers = Array.from({ length: 10 }, () => uuid.v4());
 const corsOptions = {
   // allow both production hostnames and local variants
   origin: [
-    'https://socialapp2.ijs.si',
-    'http://socialapp2.ijs.si' 
+    'https://socialapp.ijs.si',
+    'http://socialapp.ijs.si' 
   ],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
@@ -62,8 +62,8 @@ try {
   const io = require('socket.io')(server, { 
   cors: {
     origin: [
-      'https://socialapp2.ijs.si',
-       'http://socialapp2.ijs.si'
+      'https://socialapp.ijs.si',
+       'http://socialapp.ijs.si'
     ], 
     credentials: true,
   },
