@@ -733,6 +733,7 @@ if (preProfile === " ") {
                   isDetail={false}
                   setHasReadArticle={setHasReadArticle}
                   currentRound={currentRound}
+                  setProgress={setProgress}
                 />
               ))
             ) : (
