@@ -56,7 +56,7 @@ const srLatinLocale = (number, index) => {
  
 timeago.register('sr', srLatinLocale);
 
-function Post({onScrolling,  post, classes, isDetail, setHasReadArticle, currentRound, socket}) {
+function Post({onScrolling,  post, classes, isDetail, setHasReadArticle, currentRound, socket, setProgress}) {
   const [comments, setComments] = useState([]);
   const inputEl = React.useRef<HTMLInputElement>(null);
  
@@ -76,8 +76,7 @@ function Post({onScrolling,  post, classes, isDetail, setHasReadArticle, current
 
   const [repost, setRepost] = useState(post.reposts? post.reposts.length: 0);
   const [repostUser, setRepostUser] = useState({});
-  const [repostId, setRepostId] = useState(post.reposts[post.reposts? post.reposts.length: 0]);
-  
+  const [repostId, setRepostId] = useState(post.reposts[post.reposts? post.reposts.length: 0]); 
   
   const [rank, setRank] = useState(parseFloat(post.rank.toFixed(2))); 
 
@@ -246,17 +245,18 @@ const submitHandler = async (e) => {
   const preValue= inputValue;
   if (removeHtmlTags(inputValue).trim().length === 0) return;
     try {
-     
+     setProgress(30);
       const lc = await axios.post("/posts/" + post._id + "/comment", { userId: currentUser._id, username: currentUser.username, txt: inputValue, postId: post._id, headers: { 'auth-token': token } });
- 
+ setProgress(100);
  if (socket) {
       socket.emit("sendComment", { postId: post._id, comment: lc.data });
     }
- 
+ setProgress(30);
       const gptRes = await axios.post(
       "/postdetail/paraphrase",
     { text: lc.data.body  , headers: { 'auth-token': token } }
       );
+      setProgress(100);
       const { paraphrasedText, feedback } = gptRes.data;
    
       setPendingComment(lc.data);
@@ -284,6 +284,7 @@ const preValue= inputValue;
   if (removeHtmlTags(inputValue).trim().length === 0) return;
 
   try {
+  setProgress(30);
     const lc = await axios.post(
       `/posts/${post._id}/comment`,
       { 
@@ -294,6 +295,7 @@ const preValue= inputValue;
         headers: { 'auth-token': token }
      }
     );
+    setProgress(100);
     
     setInputValue("");
 
@@ -302,11 +304,12 @@ const preValue= inputValue;
     }
 
  
-
+setProgress(30);
     const gptRes = await axios.post(
       "/postdetail/paraphrase",
     { text: lc.data.body  , headers: { 'auth-token': token } }
       );
+      setProgress(100);
       const { paraphrasedText, feedback } = gptRes.data;
       
        
@@ -335,7 +338,7 @@ const handleEditSubmit = async (editedText) => {
   console.log("handleEditSubmit");
   try {
     const token = localStorage.getItem("token");
-
+setProgress(30);
      const res = await axios.put(
       `/posts/${pendingComment._id}/updateComment/`,
       { 
@@ -350,6 +353,7 @@ const handleEditSubmit = async (editedText) => {
       headers: { 'auth-token': token }
       }
       );  
+      setProgress(100);
     setInputValue("");
 
     const updatedComment = {
@@ -493,6 +497,7 @@ const triangleOverlayStyle = {
 
   return (
     <InView as="div" onChange={(inView, entry) => handleViewedChange(inView, post)}>
+    
     <div className={classes.post} style={{ position: "relative", margin: isDetail && "5px 0",  background: repost > 0 ? "#F5F5F5" : "#ffffff"}}  >
       
       {/* Green bar at the top of the post */}
