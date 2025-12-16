@@ -157,17 +157,19 @@ useEffect(() => {
 
   // Handle new comment
   const handleNewComment = (data) => {
+  console.log("handleNewComment called with data:", data);
     const { comment, postId } = data;
     if (postId !== post._id) return;
 
     setComments(prev => {
-      if (prev.some(c => c._id === comment._id)) return prev;
-      return [comment, ...prev]; // prepend new comment
-    });
+    if (prev.some(c => c._id === comment._id)) return prev;
+    return [comment, ...prev];
+  });
   };
 
   // Handle updated comment
   const handleUpdateComment = (data) => {
+  console.log("handleUpdateComment called with data:", data);
     const { comment, postId } = data;
     if (postId !== post._id) return;
 
@@ -179,8 +181,8 @@ useEffect(() => {
     };
 
     setComments(prev =>
-      prev.map(c => (c._id === normalizedComment._id ? normalizedComment : c))
-    );
+    prev.map(c => (c._id === comment._id ? { ...c, body: comment.body } : c))
+  );
   };
 
   socket.on('newComment', handleNewComment);
@@ -247,6 +249,10 @@ const submitHandler = async (e) => {
      
       const lc = await axios.post("/posts/" + post._id + "/comment", { userId: currentUser._id, username: currentUser.username, txt: inputValue, postId: post._id, headers: { 'auth-token': token } });
  
+ if (socket) {
+      socket.emit("sendComment", { postId: post._id, comment: lc.data });
+    }
+ 
       const gptRes = await axios.post(
       "/postdetail/paraphrase",
     { text: lc.data.body  , headers: { 'auth-token': token } }
@@ -292,8 +298,9 @@ const preValue= inputValue;
     setInputValue("");
 
     if (socket) {
-      socket.emit("newComment", { postId: post._id, comment: lc.data });
+      socket.emit("sendComment", { postId: post._id, comment: lc.data });
     }
+
  
 
     const gptRes = await axios.post(
@@ -356,7 +363,7 @@ const handleEditSubmit = async (editedText) => {
     );
 
     if (socket) {
-      socket.emit("updateComment", { postId: post._id, comment: updatedComment });
+      socket.emit("sendUpdateComment", { postId: post._id, comment: updatedComment });
     }
 
     setEditModalOpen(false);

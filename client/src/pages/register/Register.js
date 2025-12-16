@@ -510,45 +510,46 @@ const handleTopicSelection = () => {
 const TOPICS_LIST = [
   {
     id: "0",
-    label: "Party Chairwoman Weidel (AfD) — “Classifying the AfD as ’extremist’ is a political attack on democracy”"
+    label: "Parteivorsitzende Weidel kritisiert Einstufung der AfD als extremistisch"
   },
   {
     id: "1",
-    label: "Green Youth Leader Nietzard (Die Grünen) — “We should beat the AfD with weapons”"
+    label: "Grüne-Jugend-Vorsitzende Nietzard sorgt mit Aussagen zu Gewalt gegen AfD für Empörung"
   },
   {
     id: "2",
-    label: "Minister of Economic Affairs and Energy Reiche (CDU) — “We must end heat-pump subsidies”"
+    label: "Bundesregierung überdenkt Förderung für Wärmepumpen"
   },
   {
     id: "3",
-    label: "Chancellor Merz (CDU) — “Suspend family reunification to protect our communities”"
+    label: "Kanzler Merz kündigt strengere Migrationskontrollen an"
   },
   {
     id: "4",
-    label: "Chancellor Merz (CDU) — “We will not introduce a wealth tax”"
+    label: "Merz lehnt Einführung einer Vermögenssteuer ab"
   },
   {
     id: "5",
-    label: "Bundestag President Klöckner (CDU) — “No rainbow flags during Pride month”"
+    label: "Bundestagspräsidentin Klöckner beendet Regenbogenflagge am Bundestag"
   },
   {
     id: "6",
-    label: "Former Health Minister Lauterbach (SPD) — “Legalisation of cannabis is the right move”"
+    label: "Karl Lauterbach treibt Cannabis-Legalisierung weiter voran"
   },
   {
     id: "7",
-    label: "Defense Minister Pistorius (SPD) — “Increase military spending to truly support Ukraine”"
+    label: "Verteidigungsminister Pistorius fordert höhere Militärausgaben"
   },
   {
     id: "8",
-    label: "Culture Minister Weimer (Independent) — “Language is not a playground”"
+    label: "Kulturminister Weimer verbietet gendergerechte Sternchenformen"
   },
   {
     id: "9",
-    label: "Environment Minister Schneider (Die Grünen) — “Raising the Deutschland ticket to €63 is necessary”"
+    label: "Preis des Deutschlandtickets soll auf 63 Euro steigen"
   }
 ];
+
 
 
 const toggleTopicSelection = (index) => {
