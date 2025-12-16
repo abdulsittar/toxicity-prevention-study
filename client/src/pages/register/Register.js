@@ -153,7 +153,7 @@ const [demographicsData, setDemographicsData] = useState({
   gender: "",
   education: "",
   employment: "",
-  politicalLeanings: 6,
+  political: 0,
   voted: "",
   politicalActivities: "",
   partyMember: "",
@@ -295,11 +295,14 @@ const [demographicsData, setDemographicsData] = useState({
 };
 
 const handleDemographicsSubmit = async () => {
-  const requiredFields = ['prolificId', 'age', 'gender', 'political'];
+  const requiredFields = ['prolificId', 'age', 'gender'];
 
   const missingFields = requiredFields.filter(
     field => !demographicsData[field] && demographicsData[field] !== 0
   );
+
+  // Separately check political since 0 is a valid value
+  const isPoliticalMissing = demographicsData.political === undefined || demographicsData.political === null;
 
   const unansweredPersonality = PERSONALITY_QUESTIONS.filter(
     (_, index) => !demographicsData[`pers_${index}`]
@@ -510,43 +513,43 @@ const handleTopicSelection = () => {
 const TOPICS_LIST = [
   {
     id: "0",
-    label: "Party Chairwoman Weidel (AfD) — “Classifying the AfD as ’extremist’ is a political attack on democracy”"
+    label: "Parteivorsitzende Weidel (AfD) — „Die Einstufung der AfD als extremistisch ist ein politischer Angriff auf die Demokratie."
   },
   {
     id: "1",
-    label: "Green Youth Leader Nietzard (Die Grünen) — “We should beat the AfD with weapons”"
+    label: "Vorsitzende der Grünen Jugend Nietzard (Die Grünen) — „Wir sollten die AfD mit Waffen bekämpfen."
   },
   {
     id: "2",
-    label: "Minister of Economic Affairs and Energy Reiche (CDU) — “We must end heat-pump subsidies”"
+    label: "Wirtschafts- und Energieminister Reiche (CDU) — „Wir müssen die Förderung für Wärmepumpen beenden."
   },
   {
     id: "3",
-    label: "Chancellor Merz (CDU) — “Suspend family reunification to protect our communities”"
+    label: "Bundeskanzler Merz (CDU) — „Familiennachzug aussetzen, um unsere Gemeinden zu schützen."
   },
   {
     id: "4",
-    label: "Chancellor Merz (CDU) — “We will not introduce a wealth tax”"
+    label: "Bundeskanzler Merz (CDU) — „Wir werden keine Vermögenssteuer einführen."
   },
   {
     id: "5",
-    label: "Bundestag President Klöckner (CDU) — “No rainbow flags during Pride month”"
+    label: "Bundestagspräsidentin Klöckner (CDU) — „Keine Regenbogenflaggen während des Pride-Monats."
   },
   {
     id: "6",
-    label: "Former Health Minister Lauterbach (SPD) — “Legalisation of cannabis is the right move”"
+    label: "Ex-Gesundheitsminister Lauterbach (SPD) — „Die Legalisierung von Cannabis ist der richtige Schritt."
   },
   {
     id: "7",
-    label: "Defense Minister Pistorius (SPD) — “Increase military spending to truly support Ukraine”"
+    label: "Verteidigungsminister Pistorius (SPD) — „Militärausgaben erhöhen, um die Ukraine wirklich zu unterstützen."
   },
   {
     id: "8",
-    label: "Culture Minister Weimer (Independent) — “Language is not a playground”"
+    label: "Kulturminister Weimer (Unabhängig) — „Sprache ist kein Spielplatz."
   },
   {
     id: "9",
-    label: "Environment Minister Schneider (Die Grünen) — “Raising the Deutschland ticket to €63 is necessary”"
+    label: "Umweltminister Schneider (Die Grünen) — „Eine Erhöhung des Deutschlandtickets auf 63 € ist notwendig."
   }
 ];
 
@@ -735,151 +738,124 @@ const handleTopicSelectionSubmit = async () => {
     <Typography
       variant="body1"
       paragraph
-      style={{ fontSize: '16px', lineHeight: 1.6 }}
+      style={{ fontSize: '16px', lineHeight: 1.6, textAlign: 'justify' }}
     >
-      Dear Participant,
+      Liebe Teilnehmerin, lieber Teilnehmer,
       <br /><br />
-      Welcome to the EU-funded study “Twon – Twin of an online social network” of the Faculty
-      of Social and Behavioural Sciences at the University of Amsterdam (UvA) in collaboration
-      with the University of Trier in Germany and the Jozef Stefan Institute (JSI) in Slovenia.
-      Please read the following text carefully before you begin. If anything is unclear, please
-      do not hesitate to contact us by email: Francois t’Serstevens (f.tserstevens@uva.nl). We
-      will be happy to answer your questions.
+      Willkommen zur EU-finanzierten Studie „Twon – Twin of an online social network“ der Fakultät für Sozial- und Verhaltenswissenschaften der Universität Amsterdam (UvA) in Zusammenarbeit mit der Universität Trier in Deutschland und dem Jožef-Stefan-Institut (JSI) in Slowenien. Bitte lesen Sie den folgenden Text sorgfältig durch, bevor Sie beginnen. Falls etwas unklar ist, zögern Sie nicht, uns per E-Mail zu kontaktieren: 
+      François t’Serstevens (f.tserstevens@uva.nl). Wir beantworten Ihre Fragen gerne.
     </Typography>
 
     {/* Objective of the Study */}
     <Typography
       variant="h5"
       gutterBottom
-      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'left' }}
+      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'justify' }}
     >
-      Objective of the Study
+      Ziel der Studie
     </Typography>
     <Typography
       variant="body1"
       paragraph
-      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'left' }}
+      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'justify' }}
     >
-      The aim of this study is to better understand how people communicate and interact
-      on online discussion platforms. We are particularly interested in how certain platform
-      features can influence the way users express their opinions and respond to one another.
-      The findings of this research will help inform the design of future social platforms
-      that encourage constructive and engaging online exchanges.
+      Das Ziel dieser Studie ist es, besser zu verstehen, wie Menschen auf Online-Diskussions-plattformen kommunizieren und interagieren. Wir interessieren uns insbesondere dafür, wie bestimmte Plattformfunktionen beeinflussen können, wie Nutzerinnen und Nutzer ihre Meinungen äußern und aufeinander reagieren. Die Erkenntnisse dieser Forschung werden dazu beitragen, zukünftige soziale Plattformen so zu gestalten, dass sie konstruktive und anregende Online-Diskussionen fördern
     </Typography>
 
     {/* Procedure of the Study */}
     <Typography
       variant="h5"
       gutterBottom
-      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'left' }}
+      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'justify' }}
     >
-      Procedure of the Study
+      Ablauf der Studie
     </Typography>
     <Typography
       variant="body1"
       paragraph
-      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'left' }}
+      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'justify' }}
     >
-      In this study, you will participate in a short series of simulated online discussions on a
-      research platform developed by the study team. You will be asked to read short posts
-      and reply as you would normally do on a social platform. In some cases, after posting
-      your message, you may see an optional rewrite suggestion generated by an AI language
-      model. You can choose freely whether to post your original version, adopt the rewrite,
-      or make further changes. Participation is fully voluntary at each step.
+      In dieser Studie nehmen Sie an einer kurzen Reihe simulierter Online-Diskussionen auf einer vom Projektteam entwickelten Forschungsplattform teil. Sie werden gebeten, kurze Beiträge zu lesen und so zu antworten, wie Sie es normalerweise auf einer sozialen Plattform tun würden. In einigen Fällen erhalten Sie nach dem Absenden Ihres Beitrags einen Überarbeitungsvorschlag, der von einem KI-Sprachmodell generiert wurde. Sie können frei entscheiden, ob Sie Ihre ursprüngliche Version posten, die Überarbeitung übernehmen oder weitere Änderungen vornehmen. Die Entscheidung ist in jedem Schritt vollständig Ihnen überlassen.
+
       <br /><br />
-      Before and after the discussion sessions, you will complete short questionnaires about
-      your experience and background. The total duration of the study will be approximately
-      15–20 minutes, including the questionnaires and participation in several short conversation
-      rounds.
+      Vor und nach den Diskussionsrunden füllen Sie kurze Fragebögen zu Ihren Erfahrungen und Ihrer Person aus. Die gesamte Studiendauer beträgt einschließlich Fragebögen und mehrerer kurzer Gesprächsrunden etwa 15–20 Minuten.
+
       <br /><br />
-      You will receive the compensation previously agreed upon with Prolific after completing
-      all parts of the study.
+      Sie erhalten die über Prolific vereinbarte Vergütung, nachdem Sie alle Studienteile abgeschlossen haben.
     </Typography>
 
     {/* Voluntary Participation */}
     <Typography
       variant="h5"
       gutterBottom
-      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'left' }}
+      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'justify' }}
     >
-      Voluntary Participation
+      Freiwillige Teilnahme
     </Typography>
     <Typography
       variant="body1"
       paragraph
-      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'left' }}
+      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'justify' }}
     >
-      Your participation is voluntary. If you want to stop, you can simply close the browser.
-      After your participation you may not want us to use your data for the project anymore.
-      In that case, you can still withdraw your consent. To withdraw after your participation,
-      please contact Prolific using the link provided to you for your participation. You do not
-      need to provide a reason. Note that we will remove your participant ID from the dataset
-      after data collection is finished, making the UvA research data anonymous. From that
-      moment, it is no longer possible for us to remove your data when consent is withdrawn.
+      Ihre Teilnahme ist freiwillig. Wenn Sie abbrechen möchten, können Sie einfach den Browser schließen.
+      <br /><br />
+      Auch nach Ihrer Teilnahme können Sie noch entscheiden, dass Ihre Daten für das Projekt nicht verwendet werden dürfen. In diesem Fall können Sie Ihre Einwilligung widerrufen. Um nach der Teilnahme zu widerrufen, kontaktieren Sie bitte Prolific über den bereitgestellten Link. Sie müssen keinen Grund angeben. Beachten Sie bitte, dass wir Ihre Teilnehmer-ID nach Abschluss der Datenerhebung aus dem Datensatz entfernen, wodurch die Forschungsdaten anonymisiert werden. Ab diesem Zeitpunkt ist es nicht mehr möglich, Ihre Daten im Falle eines Widerrufs zu löschen.
     </Typography>
 
     {/* Data / Privacy */}
     <Typography
       variant="h5"
       gutterBottom
-      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'left' }}
+      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'justify' }}
     >
-      What happens to my data?
+      Was passiert mit meinen Daten?
     </Typography>
     <Typography
       variant="body1"
       paragraph
-      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'left' }}
+      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'justify' }}
     >
-      In this study, the University of Amsterdam will not collect your personal data directly.
-      We make use of a third party to collect the research data and have a contract in place
-      to guarantee your privacy. Research data can be published and reused in other research,
-      but only in such a way that it cannot be traced back to you.
+      In dieser Studie sammelt die Universität Amsterdam keine personenbezogenen Daten direkt von Ihnen. Wir arbeiten mit einem Drittanbieter zusammen, der die Forschungsdaten erhebt, und haben vertragliche Vereinbarungen getroffen, um Ihre Privatsphäre zu schützen. Forschungsdaten können veröffentlicht und für weitere Forschung wiederverwendet werden, jedoch ausschließlich in einer Form, die keinen Rückschluss auf Ihre Person zulässt.
     </Typography>
 
     <Typography
       variant="h5"
       gutterBottom
-      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'left' }}
+      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'justify' }}
     >
-      How long will my data be stored?
+      Wie lange werden meine Daten gespeichert?
     </Typography>
     <Typography
       variant="body1"
       paragraph
-      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'left' }}
+      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'justify' }}
     >
-      The anonymous research data and related materials will be securely archived for a minimum
-      of 10 years after the project has finished.
+      Die anonymisierten Forschungsdaten und zugehörigen Materialien werden mindestens 10 Jahre nach Abschluss des Projekts sicher archiviert.
     </Typography>
 
     {/* Further Information */}
     <Typography
       variant="h5"
       gutterBottom
-      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'left' }}
+      style={{ marginBottom: '12px', color: '#1976d2', textAlign: 'justify' }}
     >
-      Further Information
+      Weitere Informationen
     </Typography>
     <Typography
       variant="body1"
       paragraph
-      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'left' }}
+      style={{ fontSize: '14px', lineHeight: 1.6, textAlign: 'justify' }}
     >
-      If you have any questions about the study, please contact the responsible researcher:
-      Francois t’Serstevens (f.tserstevens@uva.nl).
+      Wenn Sie Fragen zur Studie haben, wenden Sie sich bitte an den verantwortlichen Forscher: François t’Serstevens (f.tserstevens@uva.nl).
       <br /><br />
-      If you have any complaints about the study or the research, please contact the Ethics
-      Review Board of ASCoR, address: Secretariat of the ASCoR Ethics Committee, University
-      of Amsterdam; phone: 020-525 3680; email: ascor-secr-fmg@uva.nl. Your complaint will
-      be treated confidentially.
+      Wenn Sie Beschwerden über die Studie oder die Forschung haben, kontaktieren Sie bitte das Ethics Review Board von ASCoR, Adresse: Sekretariat des ASCoR Ethics Committee, Universität Amsterdam, Postfach 15793, 1001 NG Amsterdam; Telefon: 020-525 3680; E-Mail: ascor-secr-fmg@uva.nl. Ihre Beschwerde wird vertraulich behandelt.
       <br /><br />
-      If you have any complaints about your personal data, please contact the Data Protection
-      Officer of the University of Amsterdam at fg@uva.nl.
+      Wenn Sie Beschwerden über Ihre personenbezogenen Daten haben, wenden Sie sich bitte an die oder den Datenschutzbeauftragten der Universität Amsterdam unter fg@uva.nl.
+
       <br /><br />
-      Sincerely,
+      Mit freundlichen Grüßen,
       <br />
-      Francois t’Serstevens
+      François t’Serstevens
     </Typography>
 
     {/* Action Buttons */}
@@ -929,8 +905,7 @@ const handleTopicSelectionSubmit = async () => {
     1.1 Prolific ID
   </Typography>
   <Typography variant="body1" style={{ marginBottom: '12px' }}>
-    Please enter your Prolific ID below (used only for participation verification, not linked to responses):
-  </Typography>
+    Bitte geben Sie unten Ihre Prolific-ID ein (wird nur zur Teilnahmebestätigung verwendet und nicht mit Antworten verknüpft):  </Typography>
   <input
     type="text"
     value={demographicsData.prolificId || ''}
@@ -949,16 +924,16 @@ const handleTopicSelectionSubmit = async () => {
 
   {/* 1.2 Demographic Information */}
   <Typography variant="h5" gutterBottom style={{ marginBottom: '16px', color: '#1976d2' }}>
-    1.2 Demographic Information
+    1.2 Demografische Informationen
   </Typography>
   <Typography variant="body1" style={{ marginBottom: '24px' }}>
-    Please answer the following questions before starting the main task:
+    Bitte beantworten Sie die folgenden statistischen Fragen zur Ihrer Person, bevor Sie mit der Hauptaufgabe beginnen:
   </Typography>
 
   {/* Age */}
   <FormControl component="fieldset" style={{ width: '100%', marginBottom: '24px' }}>
     <FormLabel component="legend" style={{ marginBottom: '12px', fontSize: '16px' }}>
-      Age *
+      1. Wie alt sind Sie? *
     </FormLabel>
     <input
       type="number"
@@ -983,7 +958,7 @@ const handleTopicSelectionSubmit = async () => {
     {demographicsData.age &&
       (demographicsData.age < 18 || demographicsData.age > 99) && (
         <Typography variant="caption" style={{ color: '#f44336', display: 'block', marginTop: '4px' }}>
-          Age must be between 18 and 99
+          Ganzzahl zwischen 18–99
         </Typography>
     )}
   </FormControl>
@@ -991,7 +966,7 @@ const handleTopicSelectionSubmit = async () => {
   {/* Gender */}
   <FormControl component="fieldset" style={{ width: '100%', marginBottom: '24px' }}>
     <FormLabel component="legend" style={{ marginBottom: '12px', fontSize: '16px' }}>
-      Gender *
+      2. Was ist Ihr Geschlecht? *
     </FormLabel>
     <RadioGroup
       value={demographicsData.gender || ''}
@@ -999,7 +974,7 @@ const handleTopicSelectionSubmit = async () => {
         setDemographicsData({ ...demographicsData, gender: e.target.value })
       }
     >
-      {["Male", "Female", "Diverse", "Prefer not to say"].map((option, index) => (
+      {["Männlich", "Weiblich", "Divers", " Keine Angabe"].map((option, index) => (
         <FormControlLabel
           key={index}
           value={option}
@@ -1014,49 +989,49 @@ const handleTopicSelectionSubmit = async () => {
   {/* Political Leanings */}
   <FormControl component="fieldset" style={{ width: '100%', marginBottom: '24px' }}>
     <FormLabel component="legend" style={{ marginBottom: '12px', fontSize: '16px' }}>
-      Political Leanings (1 = Very Left-leaning, 11 = Very Right-leaning)
+      3. Politische Einstellung: In der Politik reden die Leute häufig von „links" und „rechts". Bitte ordnen Sie sich auf der folgenden Skala ein. (−5 = Links, +5 = Rechts)
     </FormLabel>
     <Slider
-      min={1}
-      max={11}
+      min={-5}
+      max={5}
       step={1}
-      value={demographicsData.political || 6}
+      value={demographicsData.political !== undefined ? demographicsData.political : 0}
       onChange={(e, value) =>
         setDemographicsData({ ...demographicsData, political: value })
       }
       valueLabelDisplay="auto"
     />
     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '16px', marginTop: '4px' }}>
-      <span>Very Left</span>
-      <span>Moderate</span>
-      <span>Very Right</span>
+      <span>sehr links</span>
+      <span>neutral</span>
+      <span>sehr rechts</span>
     </div>
   </FormControl>
 
   {/* 1.3 Personality Test */}
   <Typography variant="h5" gutterBottom style={{ marginBottom: '16px', color: '#1976d2' }}>
-    1.3 Personality Test
+    1.3 Persönlichkeitstest
   </Typography>
 
   <Typography variant="body1" style={{ marginBottom: '12px' }}>
-    Below are several statements about attitudes and behaviours. Please indicate how much you agree or disagree with each statement using the following scale:
-  </Typography>
+    Unten finden Sie mehrere Aussagen über Einstellungen und Verhaltensweisen. Bitte geben Sie an, inwieweit Sie jeder Aussage zustimmen oder nicht zustimmen, basierend auf der folgenden Skala:  </Typography>
 
   <Typography variant="body1" style={{ marginBottom: '20px', fontWeight: 'bold' }}>
-    1 = Do not agree at all &nbsp;&nbsp;&nbsp;
-    2 = Slightly agree &nbsp;&nbsp;&nbsp;
+    1 = Stimme überhaupt nicht zu &nbsp;&nbsp;&nbsp;
+    2 =  Stimme nicht zu &nbsp;&nbsp;&nbsp;
     3 = Neutral &nbsp;&nbsp;&nbsp;
-    4 = Agree &nbsp;&nbsp;&nbsp;
-    5 = Fully agree
+    4 = Stimme zu &nbsp;&nbsp;&nbsp;
+    5 = Stimme voll zu
+
   </Typography>
 
   {[
-    "There have been times when I was willing to suffer some small harm so that I could punish someone else who deserved it.",
-    "It’s wise to keep track of information that you can use against people later.",
-    "There are things you should hide from other people to preserve your reputation.",
-    "I insist on getting the respect I deserve.",
-    "I want my rivals to fail.",
-    "People who mess with me always regret it."
+    "Es gab Zeiten, in denen ich bereit war, einen kleinen Schaden in Kauf zu nehmen, um jemanden zu bestrafen, der es verdient hatte",
+    "Es ist klug, Informationen zu sammeln, die man später gegen Menschen verwenden kann.",
+    "Man sollte bestimmte Dinge vor anderen verbergen, um seinen Ruf zu schützen.",
+    "Ich bestehe darauf, den Respekt zu bekommen, den ich verdiene.",
+    "Ich möchte, dass meine Rivalen scheitern.",
+    "Menschen, die sich mit mir anlegen, bereuen es immer."
   ].map((statement, idx) => (
     <FormControl component="fieldset" key={idx} style={{ width: '100%', marginBottom: '24px' }}>
       <Typography variant="body1" style={{ marginBottom: '8px', textAlign: 'left', lineHeight: 1.4 }}>
@@ -1095,51 +1070,20 @@ const handleTopicSelectionSubmit = async () => {
   gutterBottom
   style={{ marginBottom: '16px', color: '#1976d2', textAlign: 'left' }}
 >
-  1.4 Experiment Explanation
+  1.4  Erklärung des Experiments
 </Typography>
 
 <Typography
   variant="body1"
   style={{ marginBottom: '24px', textAlign: 'left', lineHeight: 1.6 }}
 >
-  In this experiment, you will be asked to select 4 topics out of a list of 10. For each of
-  the selected topics, you will be invited to write a comment expressing your thoughts or
-  opinions. On each topic page, you may also see comments from previous participants who
-  took part in this study (if any were submitted). Before you begin commenting, you will
-  have the opportunity to choose an avatar so that your posts can be visually identified
-  throughout the experiment. This avatar will serve as a consistent representation of you
-  within the discussion environment. Importantly, your avatar will not enable your
-  identification in any way. Do not include any personal or identifying information (e.g.,
-  your name, email address, or contact details) in any of your written responses or
-  messages during this study.
-</Typography>
-
-{/* 1.5 Topic Selection */}
-<Typography
-  variant="h5"
-  gutterBottom
-  style={{ marginBottom: '16px', color: '#1976d2', textAlign: 'left' }}
->
-  1.5 Topic Selection
-</Typography>
-
-<Typography
-  variant="body1"
-  component="div"
-  style={{ marginBottom: '24px', textAlign: 'left' }}
->
-  <ul style={{ paddingLeft: '20px', marginTop: '8px', textAlign: 'left' }}>
-    <li>Party Chairwoman Weidel (AfD) — “Classifying the AfD as ’extremist’ is a political attack on democracy”</li>
-    <li>Green Youth Leader Nietzard (Die Grünen) — “We should beat the AfD with weapons”</li>
-    <li>Minister of Economic Affairs and Energy Reiche (CDU) — “We must end heat‑pump subsidies”</li>
-    <li>Chancellor Merz (CDU) — “Suspend family reunification to protect our communities”</li>
-    <li>Chancellor Merz (CDU) — “We will not introduce a wealth tax”</li>
-    <li>Bundestag President Klöckner (CDU) — “No rainbow flags during Pride month”</li>
-    <li>Former Health Minister Lauterbach (SPD) — “Legalisation of cannabis is the right move”</li>
-    <li>Defense Minister Pistorius (SPD) — “Increase military spending to truly support Ukraine”</li>
-    <li>Culture Minister Weimer (Independent) — “Language is not a playground”</li>
-    <li>Environment Minister Schneider (Die Grünen) — “Raising the Deutschland ticket to €63 is necessary”</li>
-  </ul>
+Nachfolgend wählen Sie bitte vier Themen aus einer Liste von zehn Themen aus. Im Anschluss bitte wir Sie, zu jedem ausgewählten Thema in einem Kommentar Ihre Meinung oder Ihre Gedanken äußern.
+<br /><br />
+Auf jeder Themenseite können Sie auch Kommentare von früheren Teilnehmenden sehen (falls bereits welche eingereicht wurden).
+<br /><br />
+Bevor Sie mit dem Kommentieren beginnen, haben Sie die Möglichkeit, einen Avatar auszuwählen, damit Ihre Beiträge während des Experiments visuell erkennbar sind. Dieser Avatar repräsentiert Sie innerhalb der Diskussionsumgebung, aber ermöglicht keinerlei Identifikation.
+<br /><br />
+<strong>Bitte geben Sie in Ihren Kommentaren keine persönlichen oder identifizierenden Informationen an </strong>(z. B. Name, E-Mail-Adresse oder andere Kontaktdaten).
 </Typography>
 
   
@@ -1313,8 +1257,12 @@ const handleTopicSelectionSubmit = async () => {
             
             {currentStage === 'topicSelection' && (
   <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-    <Typography variant="h4" gutterBottom align="center" style={{ marginBottom: "32px" }}>
-      Select 4 Topics
+    <Typography variant="h4" gutterBottom align="center" style={{ marginBottom: "16px" }}>
+      1.5 Themenauswahl
+    </Typography>
+    
+    <Typography variant="body1" style={{ marginBottom: "24px", textAlign: "left", lineHeight: 1.6 }}>
+      Bitte wählen Sie vier Themen aus der untenstehenden Liste aus. Anschließend werden Sie gebeten, einen Kommentar zu allen vier ausgewählten Themen zu schreiben.
     </Typography>
 
     <Paper elevation={2} style={{ padding: "24px", marginBottom: "24px" }}>

@@ -30,14 +30,14 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const discussionStatements = [
-  { key: "afraid", text: "I felt afraid while reading the previous conversation." },
-  { key: "angry", text: "I felt angry while reading the previous conversation." },
-  { key: "happy", text: "I felt happy while reading the previous conversation." },
-  { key: "sad", text: "I felt sad while reading the previous conversation." },
-  { key: "trusting", text: "I felt trusting or accepting toward the previous conversation." },
-  { key: "disgusted", text: "I felt disgusted while reading the previous conversation." },
-  { key: "curious", text: "I felt curious or eager to see what would happen next." },
-  { key: "surprised", text: "I felt surprised by something I read." }
+  { key: "afraid", text: "Ich fühlte mich ängstlich, als ich die vorherige Konversation las." },
+  { key: "angry", text: "Ich fühlte mich wütend, als ich die vorherige Konversation las." },
+  { key: "happy", text: "Ich fühlte mich glücklich, als ich die vorherige Konversation las." },
+  { key: "sad", text: "Ich fühlte mich traurig, als ich die vorherige Konversation las" },
+  { key: "trusting", text: "Ich fühlte Vertrauen oder Zustimmung gegenüber der vorherigen Konversation." },
+  { key: "disgusted", text: "Ich fühlte mich abgestoßen, als ich die vorherige Konversation las." },
+  { key: "curious", text: "Ich war neugierig oder gespannt darauf, wie es weitergehen würde." },
+  { key: "surprised", text: "Ich war von etwas überrascht, das ich in der vorherigen Konversation gelesen habe." }
 ];
 
 function Feed({username, classes, selectedValue, searchTerm, actionTriggered, setHasReadArticle, currentRound}) {
@@ -775,13 +775,12 @@ if (preProfile === " ") {
           </div>
     
           <Dialog open={openSurvey} onClose={() => setOpenSurvey(false)} maxWidth="sm" fullWidth>
-      <DialogTitle>Discussion Perception</DialogTitle>
+      <DialogTitle>Wahrnehmung der Diskussion</DialogTitle>
     
       <DialogContent>
         <Typography variant="body1" paragraph> 
-          Please indicate the extent to which you felt each of the following emotions while reading the previous conversation.  
-          Use the scale:  
-          <strong>1 = Not at all, 2 = Slightly, 3 = Moderately, 4 = Strongly, 5 = Extremely</strong>
+          Bitte geben Sie an, in welchem Ausmaß Sie die folgenden Emotionen während der vorherigen Konversation empfunden haben. Verwenden Sie die untenstehende Skala:
+          <strong>1 = Überhaupt nicht, 2 = Leicht, 3 = Mäßig, 4 = Stark, 5 = Sehr stark</strong>
         </Typography>
     
         {discussionStatements.map((s) => (

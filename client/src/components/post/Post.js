@@ -458,7 +458,7 @@ const handleEditSubmit = async (editedText) => {
     // Regular expression to match HTML tags
     const htmlRegex = /<[^>]*>/g;
     
-    // Remove HTML tags from the text  "https://socialapp.ijs.si/news/zelensky-ukraine-must-be-included"
+    // Remove HTML tags from the text  "https://socialapp2.ijs.si/news/zelensky-ukraine-must-be-included"
     const textWithoutHtml = text.replace(htmlRegex, '');
     
     return textWithoutHtml;

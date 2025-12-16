@@ -1368,7 +1368,7 @@ const handle_feedback_Changed = async (e) => {
         <TextField className={classes.textField3} id="password" label="Password" value={password4}/>
 				
         <p className={classes.secon_disclaimor5}>{note}</p>
-        <p className={classes.secon_disclaimor4}>{[...enony, "https://socialapp.ijs.si/register/" +uniqId]}</p>
+        <p className={classes.secon_disclaimor4}>{[...enony, "https://socialapp2.ijs.si/register/" +uniqId]}</p>
         <p className={classes.secon_disclaimor4}>{screen}</p>
         <p className={classes.secon_disclaimor4}>{plzCon}</p>
         <form  className={classes.question}>

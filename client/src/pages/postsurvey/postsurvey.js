@@ -15,6 +15,7 @@ function Postsurvey({ classes }) {
 
   // Survey state
   const [usr, setUsr] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
   const [usabilityValues, setUsabilityValues] = useState({ q1: "", q2: "" });
   const [manipulationValues, setManipulationValues] = useState({
     q1: "", q2: "", q3: "", q4: "", q5: ""
@@ -28,6 +29,19 @@ function Postsurvey({ classes }) {
   const handleManipulationChange = (e) => {
     setManipulationValues(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  // Check if all required fields are filled
+  useEffect(() => {
+    const usabilityFilled = usabilityValues.q1 && usabilityValues.q2;
+    const manipulationFilled = Object.values(manipulationValues).every(val => val !== "");
+    
+    if (usabilityFilled && manipulationFilled && currentPage === 1) {
+      // Automatically move to page 2
+      setTimeout(() => {
+        setCurrentPage(2);
+      }, 300);
+    }
+  }, [usabilityValues, manipulationValues, currentPage]);
 
   const handleSubmit = async () => {
     try {
@@ -90,22 +104,33 @@ function Postsurvey({ classes }) {
 
       <div style={{ padding: "16px", maxWidth: "800px", margin: "0 auto" }}>
         <Typography variant="h4" gutterBottom style={{ color: "#1976d2" }}>
-          Post-Survey
+          Nacherhebung
         </Typography>
 
-        {/* 3.1 Usability Check */}
-        <Typography variant="h5" gutterBottom style={{ marginTop: "24px", color: "#1976d2" }}>
-          3.1 Usability Check
+        {currentPage === 1 && (
+          <>
+            {/* 3.1 Benutzerfreundlichkeit */}
+            <Typography variant="h5" gutterBottom style={{ marginTop: "24px", color: "#1976d2" }}>
+              3.1 Benutzerfreundlichkeit
+            </Typography>
+        <Typography variant="body2" paragraph>
+          Bitte geben Sie an, wie sehr Sie den folgenden Aussagen zustimmen.
         </Typography>
-        <FormControl component="fieldset">
-          <FormLabel component="legend">The topics were relevant.</FormLabel>
+        <Typography variant="body2" paragraph style={{ fontSize: '12px' }}>
+          1 = Stimme überhaupt nicht zu &nbsp;&nbsp; 2 = Stimme nicht zu &nbsp;&nbsp; 3 = Neutral<br />
+          4 = Stimme zu &nbsp;&nbsp; 5 = Stimme voll zu
+        </Typography>
+        <FormControl component="fieldset" fullWidth>
+          <FormLabel component="legend">Die Themen waren relevant für die deutsche Politik.</FormLabel>
           <RadioGroup row name="q1" value={usabilityValues.q1} onChange={handleUsabilityChange}>
             {[1, 2, 3, 4, 5].map(val => (
               <FormControlLabel key={val} value={val.toString()} control={<Radio />} label={val} />
             ))}
           </RadioGroup>
 
-          <FormLabel component="legend">The comments I read were connected to the initial post.</FormLabel>
+          <FormLabel component="legend" style={{ marginTop: "16px" }}>
+            Die Kommentare, die ich gelesen habe, schienen im Allgemeinen mit dem Ausgangspost verbunden zu sein.
+          </FormLabel>
           <RadioGroup row name="q2" value={usabilityValues.q2} onChange={handleUsabilityChange}>
             {[1, 2, 3, 4, 5].map(val => (
               <FormControlLabel key={val} value={val.toString()} control={<Radio />} label={val} />
@@ -115,17 +140,27 @@ function Postsurvey({ classes }) {
 
         <Divider style={{ margin: "24px 0" }} />
 
-        {/* 3.2 Manipulation Check */}
+        {/* 3.2 Manipulationscheck */}
         <Typography variant="h5" gutterBottom style={{ color: "#1976d2" }}>
-          3.2 Manipulation Check
+          3.2 Manipulationscheck – nur für Treatment
         </Typography>
-        <FormControl component="fieldset">
+        <Typography variant="body2" paragraph>
+          Bitte geben Sie an, wie sehr Sie den folgenden Aussagen zustimmen.
+        </Typography>
+        <Typography variant="body2" paragraph style={{ fontSize: '12px' }}>
+          Die vorgeschlagenen Überarbeitungen...
+        </Typography>
+        <Typography variant="body2" paragraph style={{ fontSize: '12px' }}>
+          1 = Stimme überhaupt nicht zu &nbsp;&nbsp; 2 = Stimme nicht zu &nbsp;&nbsp; 3 = Neutral<br />
+          4 = Stimme zu &nbsp;&nbsp; 5 = Stimme voll zu
+        </Typography>
+        <FormControl component="fieldset" fullWidth>
           {[
-            "The suggested rewrites improved spelling.",
-            "The suggested rewrites improved readability.",
-            "The suggested rewrites made my comments more civil.",
-            "The suggested rewrites preserved my original opinion.",
-            "The suggested rewrites were useful overall."
+            "haben meine Rechtschreibung verbessert.",
+            "haben die Lesbarkeit meiner Kommentare verbessert.",
+            "haben meine Kommentare höflicher klingen lassen.",
+            "haben meine ursprüngliche Meinung beibehalten.",
+            "waren insgesamt nützlich."
           ].map((statement, i) => (
             <div key={i} style={{ marginBottom: "12px" }}>
               <FormLabel component="legend">{statement}</FormLabel>
@@ -137,54 +172,58 @@ function Postsurvey({ classes }) {
             </div>
           ))}
         </FormControl>
+          </>
+        )}
 
-        <Divider style={{ margin: "24px 0" }} />
+        {currentPage === 2 && (
+          <>
+            {/* 3.3 Feedback / Debriefing */}
+            <Typography variant="h5" gutterBottom style={{ color: "#1976d2", marginTop: "24px" }}>
+              3.3  Debriefing
+            </Typography>
 
-        {/* 3.3 Feedback / Debriefing */}
-<Typography variant="h5" gutterBottom style={{ color: "#1976d2", marginTop: "24px" }}>
-  3.3 Feedback / Debriefing
-</Typography>
+            <TextField
+              label="Ihr Feedback"
+              multiline
+              rows={4}
+              variant="outlined"
+              fullWidth
+              value={feedbackText}
+              onChange={(e) => setFeedbackText(e.target.value)}
+              placeholder="Share your thoughts or concerns about the study here."
+              style={{ marginBottom: "16px" }}
+            />
 
-<TextField
-  label="Your feedback"
-  multiline
-  rows={4}
-  variant="outlined"
-  fullWidth
-  value={feedbackText}
-  onChange={(e) => setFeedbackText(e.target.value)}
-  placeholder="Share your thoughts or concerns about the study here."
-  style={{ marginBottom: "16px" }}
-/>
+                        <Typography variant="body1" paragraph style={{ fontSize: '14px', lineHeight: 1.6 }}>
+                        Vielen Dank für Ihre Teilnahme an dieser Studie. Wir möchten Ihnen nun den vollständigen Zweck des Experiments erläutern. Diese Studie zielte darauf ab, zu verstehen, wie Menschen in Online-Diskussionen kommunizieren und wie sich toxische oder
+                        unhöfliche Sprache in solchen Umgebungen verbreitet.
+                        <br />                        
+                        Einige der Beiträge und die ersten 1–3 Kommentare in jeder Diskussion wurden vom
+                        Forschungsteam erstellt. Diese ersten Kommentare sollten natürliche Reaktionen hervorrufen und die Art von unhöflicher Sprache widerspiegeln, die in sozialen Medien auftreten
+                        kann. Spätere Nachrichten wurden von Teilnehmenden wie Ihnen verfasst, und in einigen
+                        5
+                        <br />
+                        Bedingungen wurden Ihnen optionale KI-Überarbeitungen angeboten, die darauf ausgelegt waren, beleidigende oder harsche Formulierungen abzuschwächen, ohne die ursprüngliche Bedeutung zu verändern.
+                        <br />
+                        Ziel der Studie war es zu untersuchen, wie proaktive, nutzerorientierte Interventionen
+                        (wie z.B. KI-Vorschläge) schädliche Sprache in Online-Konversationen reduzieren können,
+                        ohne die Meinungsfreiheit einzuschränken.
+                        <br />
+                        Ihre Antworten bleiben vollständig anonym, und alle Ergebnisse werden nur in aggregierter Form berichtet. Wenn Sie Fragen haben oder Ihre Daten zurückziehen möchten,
+                        kontaktieren Sie bitte f.tserstevens@uva.nl.
+                        </Typography>
 
-<Typography variant="body1" paragraph style={{ fontSize: '14px', lineHeight: 1.6 }}>
-  Thank you for participating in this study. We would like to explain the full purpose
-  of the experiment. This study aimed to understand how people communicate in online
-  discussions and how toxic or uncivil language spreads in such environments.
-  Some of the posts and the first 1–3 comments in each conversation were created by
-  the research team. These initial comments were designed to elicit natural responses from
-  participants while reflecting the kind of uncivil language that can appear on social media.
-  Subsequent messages were written by participants like you, and in some conditions, you
-  were offered optional AI-generated rewrites designed to reduce offensive or harsh wording
-  while keeping the original meaning intact.
-  The purpose of the study was to explore how proactive, user-centered interventions—like
-  AI suggestions—can reduce harmful language in online conversations without restricting
-  users’ freedom of expression.
-  Your responses remain fully anonymous, and all results will be reported in aggregate. If
-you have any questions or wish to withdraw your data, please contact f.tserstevens@uva.nl.
-</Typography>
-
-<Button
-  variant="contained"
-  color="primary"
-  style={{ marginTop: "16px" }}
-  onClick={handleSubmit}
+                        <Button
+              variant="contained"
+              color="primary"
+              style={{ marginTop: "16px" }}
+              onClick={handleSubmit}
 >
-  Submit Post-Survey
-</Button>
+              Submit Post-Survey
+            </Button>
+          </>
+        )}
       </div>
     </>
   );
-}
-
-export default withStyles(styles)(Postsurvey);
+}export default withStyles(styles)(Postsurvey);

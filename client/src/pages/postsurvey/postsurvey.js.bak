@@ -1,0 +1,227 @@
+import React, { useState, useContext, useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext.js";
+import Topbar from "../../components/topbar/Topbar.js";
+import { withStyles } from '@material-ui/core/styles';
+import { Typography, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Divider, TextField, Button } from "@mui/material";
+import { styles } from './postsurveyStyle.js';
+import { ToastContainer } from 'react-toastify';
+import { useParams } from 'react-router';
+import axios from "axios";
+
+function Postsurvey({ classes }) {
+  const { user: currentUser } = useContext(AuthContext);
+  const username = useParams().username;
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  // Survey state
+  const [usr, setUsr] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usabilityValues, setUsabilityValues] = useState({ q1: "", q2: "" });
+  const [manipulationValues, setManipulationValues] = useState({
+    q1: "", q2: "", q3: "", q4: "", q5: ""
+  });
+  const [feedbackText, setFeedbackText] = useState("");
+
+  const handleUsabilityChange = (e) => {
+    setUsabilityValues(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleManipulationChange = (e) => {
+    setManipulationValues(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  // Check if all required fields are filled
+  useEffect(() => {
+    const usabilityFilled = usabilityValues.q1 && usabilityValues.q2;
+    const manipulationFilled = Object.values(manipulationValues).every(val => val !== "");
+    
+    if (usabilityFilled && manipulationFilled && currentPage === 1) {
+      // Automatically move to page 2
+      setTimeout(() => {
+        setCurrentPage(2);
+      }, 300);
+    }
+  }, [usabilityValues, manipulationValues, currentPage]);
+
+  const handleSubmit = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const data = {
+        uniqueId:currentUser.uniqueId,
+        username,
+        usability: usabilityValues,
+        manipulation: manipulationValues,
+        feedback: feedbackText,
+      }; 
+      
+      console.log("Submitting survey data:", data); 
+      const res = await axios.post(`/postsurvey/submit/${currentUser._id}`, {data, headers: { 'auth-token': token } });
+      
+      if (res.status === 200) {
+        const code = res.data.prolific_code;
+        alert(`🎉 Survey submitted successfully!\n\nYour Prolific ID is:\n\n${code}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert(`🎉 You have already submitted the survey!\n\nYour Prolific ID is:\n\n${err}`);
+    }
+  };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(`/users?username=${username}`, { headers: { 'auth-token': token } });
+      setUsr(res.data);
+    };
+    fetchUser();
+  }, [username]);
+
+  return (
+    <>
+      <Topbar isProfile="true" showRefreshIcon={false} />
+      <ToastContainer />
+      <div className={classes.profile}>
+        <div className={classes.profileRight}>
+          <div className={classes.profileRightTop}>
+            <div className={classes.profileCover}>
+              <img
+                className={classes.profileCoverImg}
+                src={usr.coverPicture ? PF + usr.coverPicture : PF + "person/noCover.png"}
+                alt=""
+              />
+              <img
+                className={classes.profileUserImg}
+                src={usr.profilePicture ? PF + usr.profilePicture : PF + "person/noAvatar.png"}
+                alt=""
+              />
+            </div>
+            <div className={classes.profileInfo}>
+              <h4 className={classes.profileInfoName}>{usr.username}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ padding: "16px", maxWidth: "800px", margin: "0 auto" }}>
+        <Typography variant="h4" gutterBottom style={{ color: "#1976d2" }}>
+          Nacherhebung
+        </Typography>
+
+        {currentPage === 1 && (
+          <>
+            {/* 3.1 Benutzerfreundlichkeit */}
+            <Typography variant="h5" gutterBottom style={{ marginTop: "24px", color: "#1976d2" }}>
+              3.1 Benutzerfreundlichkeit
+            </Typography>
+        <Typography variant="body2" paragraph>
+          Bitte geben Sie an, wie sehr Sie den folgenden Aussagen zustimmen.
+        </Typography>
+        <Typography variant="body2" paragraph style={{ fontSize: '12px' }}>
+          1 = Stimme überhaupt nicht zu &nbsp;&nbsp; 2 = Stimme nicht zu &nbsp;&nbsp; 3 = Neutral<br />
+          4 = Stimme zu &nbsp;&nbsp; 5 = Stimme voll zu
+        </Typography>
+        <FormControl component="fieldset" fullWidth>
+          <FormLabel component="legend">Die Themen waren relevant für die deutsche Politik.</FormLabel>
+          <RadioGroup row name="q1" value={usabilityValues.q1} onChange={handleUsabilityChange}>
+            {[1, 2, 3, 4, 5].map(val => (
+              <FormControlLabel key={val} value={val.toString()} control={<Radio />} label={val} />
+            ))}
+          </RadioGroup>
+
+          <FormLabel component="legend" style={{ marginTop: "16px" }}>
+            Die Kommentare, die ich gelesen habe, schienen im Allgemeinen mit dem Ausgangspost verbunden zu sein.
+          </FormLabel>
+          <RadioGroup row name="q2" value={usabilityValues.q2} onChange={handleUsabilityChange}>
+            {[1, 2, 3, 4, 5].map(val => (
+              <FormControlLabel key={val} value={val.toString()} control={<Radio />} label={val} />
+            ))}
+          </RadioGroup>
+        </FormControl>
+
+        <Divider style={{ margin: "24px 0" }} />
+
+        {/* 3.2 Manipulationscheck */}
+        <Typography variant="h5" gutterBottom style={{ color: "#1976d2" }}>
+          3.2 Manipulationscheck – nur für Treatment
+        </Typography>
+        <Typography variant="body2" paragraph>
+          Bitte geben Sie an, wie sehr Sie den folgenden Aussagen zustimmen.
+        </Typography>
+        <Typography variant="body2" paragraph style={{ fontSize: '12px' }}>
+          Die vorgeschlagenen Überarbeitungen...
+        </Typography>
+        <Typography variant="body2" paragraph style={{ fontSize: '12px' }}>
+          1 = Stimme überhaupt nicht zu &nbsp;&nbsp; 2 = Stimme nicht zu &nbsp;&nbsp; 3 = Neutral<br />
+          4 = Stimme zu &nbsp;&nbsp; 5 = Stimme voll zu
+        </Typography>
+        <FormControl component="fieldset" fullWidth>
+          {[
+            "haben meine Rechtschreibung verbessert.",
+            "haben die Lesbarkeit meiner Kommentare verbessert.",
+            "haben meine Kommentare höflicher klingen lassen.",
+            "haben meine ursprüngliche Meinung beibehalten.",
+            "waren insgesamt nützlich."
+          ].map((statement, i) => (
+            <div key={i} style={{ marginBottom: "12px" }}>
+              <FormLabel component="legend">{statement}</FormLabel>
+              <RadioGroup row name={`q${i+1}`} value={manipulationValues[`q${i+1}`]} onChange={handleManipulationChange}>
+                {[1, 2, 3, 4, 5].map(val => (
+                  <FormControlLabel key={val} value={val.toString()} control={<Radio />} label={val} />
+                ))}
+              </RadioGroup>
+            </div>
+          ))}
+        </FormControl>
+          </>
+        )}
+
+        {currentPage === 2 && (
+          <>
+            {/* 3.3 Feedback / Debriefing */}
+            <Typography variant="h5" gutterBottom style={{ color: "#1976d2", marginTop: "24px" }}>
+              3.3 Feedback / Debriefing
+            </Typography>
+
+            <TextField
+              label="Your feedback"
+              multiline
+              rows={4}
+              variant="outlined"
+              fullWidth
+              value={feedbackText}
+              onChange={(e) => setFeedbackText(e.target.value)}
+              placeholder="Share your thoughts or concerns about the study here."
+              style={{ marginBottom: "16px" }}
+            />
+
+<Typography variant="body1" paragraph style={{ fontSize: '14px', lineHeight: 1.6 }}>
+  Thank you for participating in this study. We would like to explain the full purpose
+  of the experiment. This study aimed to understand how people communicate in online
+  discussions and how toxic or uncivil language spreads in such environments.
+  Some of the posts and the first 1–3 comments in each conversation were created by
+  the research team. These initial comments were designed to elicit natural responses from
+  participants while reflecting the kind of uncivil language that can appear on social media.
+  Subsequent messages were written by participants like you, and in some conditions, you
+  were offered optional AI-generated rewrites designed to reduce offensive or harsh wording
+  while keeping the original meaning intact.
+  The purpose of the study was to explore how proactive, user-centered interventions—like
+  AI suggestions—can reduce harmful language in online conversations without restricting
+  users’ freedom of expression.
+  Your responses remain fully anonymous, and all results will be reported in aggregate. If
+you have any questions or wish to withdraw your data, please contact f.tserstevens@uva.nl.
+</Typography>
+
+<Button
+  variant="contained"
+  color="primary"
+  style={{ marginTop: "16px" }}
+  onClick={handleSubmit}
+>
+  Submit Post-Survey
+</Button>
+      </div>
+    </>
+  );
+}
+
+export default withStyles(styles)(Postsurvey);
