@@ -762,17 +762,9 @@ if (preProfile === " ") {
 }
           </div>
     
-           {/* Navigation Buttons */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '32px', maxWidth: '800px', margin: '32px auto 0' }}>
-            <Button
-              variant="outlined"
-              onClick={handlePrevious}
-              style={{ minWidth: '120px', padding: '12px 24px' }}
-            >
-              Previous
-            </Button>
-            <Button variant="contained" color="primary" onClick={() => handleContinue(posts[0])}> Continue </Button>
-          </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px', maxWidth: '800px', margin: '32px auto 0' }}>
+              <Button variant="contained" color="primary" onClick={() => handleContinue(posts[0])}> Continue </Button>
+      </div>
     
           <Dialog open={openSurvey} onClose={() => setOpenSurvey(false)} maxWidth="sm" fullWidth>
       <DialogTitle>Wahrnehmung der Diskussion</DialogTitle>

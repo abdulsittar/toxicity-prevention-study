@@ -2786,7 +2786,7 @@
         res.status(200).json({ success: true, message: "Posts created successfully!" });
     });
 
-router.post('/:id/createInitialData', verifyToken, async (req, res) => {
+router.post('/:id/createInitialDataPrev', verifyToken, async (req, res) => {
   try {
     const { selectedTopics, userId, pool } = req.body;
 
@@ -2881,6 +2881,123 @@ const envUserIds = Object.keys(envUsersMap).filter(Boolean);
   }
 });
 
+router.post('/:id/createInitialData', verifyToken, async (req, res) => {
+  try {
+    const { selectedTopics, userId, pool } = req.body;
+
+    if (!selectedTopics || selectedTopics.length === 0) {
+      return res.status(400).json({ error: "No topics selected." });
+    }
+
+    const topicsData = require('../data/topics');
+    const createdPosts = [];
+
+    const envUsersMap = {
+      [process.env.Netflix]: "Netflix",
+      [process.env.SkySport]: "SkySport",
+      [process.env.Tagesspeigel]: "Tagesspeigel",
+      [process.env.DerSpeigel]: "DerSpeigel",
+      [process.env.faznet]: "faznet",
+      [process.env.zeit]: "zeit",
+      [process.env.handle]: "handle"
+    };
+
+    const envUserIds = Object.keys(envUsersMap).filter(Boolean);
+    let postUserIndex = 0;
+
+    const currentUserId = new mongoose.Types.ObjectId(userId);
+
+    for (const topicId of selectedTopics) {
+      const topic = topicsData[topicId];
+      if (!topic) continue;
+
+      let existingPost = await Post.findOne({ desc: topic.post });
+      let savedPost;
+
+      if (!existingPost || existingPost.reactorUser.length >= 5) {
+        // =====================
+        // CREATE NEW POST
+        // =====================
+        const postAuthorId = envUserIds[postUserIndex % envUserIds.length];
+        postUserIndex++;
+
+        const newPost = new Post({
+          userId: postAuthorId,
+          pool,
+          reactorUser: [currentUserId],
+          desc: topic.post,
+          webLinks: topic.link,
+          content: "topic",
+          rank: 0,
+          ukraine: 0,
+          disinfo: 0,
+          treatment: "",
+          userGroup: "custom_selection",
+          thumb: "",
+          weight: 0,
+          comments: [],
+          postedBy: postAuthorId
+        });
+
+        savedPost = await newPost.save();
+
+        // =====================
+        // CREATE COMMENTS
+        // =====================
+        if (Array.isArray(topic.comments)) {
+          for (const commentText of topic.comments) {
+            const commentAuthorId =
+              envUserIds[Math.floor(Math.random() * envUserIds.length)];
+
+            const newComment = new Comment({
+              body: commentText,
+              original: commentText,
+              username: envUsersMap[commentAuthorId] || "system",
+              userId: commentAuthorId,
+              postId: savedPost._id,
+              likes: [],
+              dislikes: []
+            });
+
+            const savedComment = await newComment.save();
+
+            savedPost.comments.push(savedComment._id);
+          }
+
+          await savedPost.save();
+        }
+
+      } else {
+        // =====================
+        // ADD REACTOR USER
+        // =====================
+        const userIdsStr = existingPost.reactorUser.map(id => id.toString());
+        if (!userIdsStr.includes(userId)) {
+          existingPost.reactorUser.push(currentUserId);
+          await existingPost.save();
+        }
+        savedPost = existingPost;
+      }
+
+      const postObj = savedPost.toObject();
+      postObj.totalReactorUsers = savedPost.reactorUser.length;
+      postObj.totalComments = savedPost.comments.length;
+
+      createdPosts.push(postObj);
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Posts and comments created successfully",
+      postsCreated: createdPosts.length,
+      posts: createdPosts
+    });
+
+  } catch (error) {
+    console.error("Error creating initial data:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 
 

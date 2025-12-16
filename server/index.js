@@ -97,6 +97,10 @@ try {
       // forward comment to all connected clients
       io.emit('newComment', data);
     });
+    
+    socket.on('sendUpdateComment', (data) => {
+  io.emit('updateComment', data); // broadcast updated comment
+});
 
     socket.on('disconnect', () => {
       users = users.filter(u => u.socketId !== socket.id);

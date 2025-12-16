@@ -108,7 +108,7 @@ router.post('/postsurvey/:uniqId',verifyToken,  async (req, res) => {
     });
 
 // LOGIN
-router.post('/isSubmitted/:val', async (req, res) => {
+router.post('/isSubmitted123/:val', async (req, res) => {
     console.log('Data received', { data: req.body });
     try {
         console.log("Received value:", req.params.val);
@@ -185,7 +185,7 @@ router.post('/isSubmitted/:val', async (req, res) => {
                     }
                 ]);*/
                 
-                const users = await SelectedUsers.aggregate([
+                    const users = await SelectedUsers.aggregate([
                     {                                             
                         $match: {
                             available: true,           // Ensure users are available
@@ -243,6 +243,101 @@ router.post('/isSubmitted/:val', async (req, res) => {
         res.status(500).json({ error: "Internal server error", details: err });
     }
 });
+
+router.post('/isSubmitted/:val', async (req, res) => {
+    console.log('Data received', { data: req.body });
+    try {
+        console.log("Received value:", req.params.val);
+
+        // Find the ID in IDStorage
+        const idstor = await IDStorage.find({ "yourID": req.params.val });
+        if (!idstor || idstor.length === 0) {
+            console.log("ID not found in IDStorage");
+            res.status(404).json({ error: "ID not found" });
+            return;
+        }
+
+        const fid = idstor[0];
+        console.log("FID object:", fid);
+
+        // Check if there's a PreSurvey entry for the given ID
+        const idExists = await PreSurvey.find({ "uniqueId": fid["_id"] });
+        console.log("PreSurvey result:", idExists);
+
+        console.log("ID exists in PreSurvey");
+
+        // Check if a User exists with the same ID
+        const userExist = await User.find({ "uniqueId": fid["_id"] });
+        console.log("User result:", userExist);
+
+        if (userExist[0]) {
+            console.log("User found");
+            let usr = {};
+            const existingSurvey = await PostSurvey.findOne({ userId: req.params.userId });
+            console.log(existingSurvey);
+
+            if (existingSurvey) {
+                if (existingSurvey[0]?.prolific_code) {
+                    usr = { data: true, login: true, user: userExist[0], code: existingSurvey[0].prolific_code };
+                } else {
+                    usr = { data: true, login: true, user: userExist[0] };
+                }
+                res.status(200).json(usr);
+            } else {
+                usr = { data: true, login: true, user: userExist[0] };
+                res.status(200).json(usr);
+            }
+
+        } else {
+            const idstor = await IDStorage.find({ "yourID": req.params.val }).lean();
+            console.log("FID:", idstor[0]);
+            console.log("FID version:", idstor[0].version);
+
+            // Get available users and add counter to duplicate usernames
+            const users = await SelectedUsers.aggregate([
+                {
+                    $match: {
+                        available: true,
+                        version: String(idstor[0].version)
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$username",
+                        users: { $push: "$$ROOT" } // Push all duplicates
+                    }
+                },
+                { $unwind: { path: "$users", includeArrayIndex: "counter" } }, // Add counter
+                {
+                    $addFields: {
+                        "users.uniqueUsername": {
+                            $concat: ["$users.username", " ", { $toString: { $add: ["$counter", 1] } }]
+                        }
+                    }
+                },
+                { $replaceRoot: { newRoot: "$users" } },
+                { $sample: { size: 20 } }, // sample to allow further deduplication if needed
+                { $limit: 6 } // final limit
+            ]);
+
+            const result = users.map(u => ({
+                username: u.uniqueUsername, // use the unique username with counter
+                profilePicture: u.profilePicture,
+                available: u.available,
+                username_second: u.username_second,
+                version: u.version
+            }));
+
+            res.status(200).json({ data: true, users: result });
+        }
+
+    } catch (err) {
+        console.error('Error saving data', { error: err.message });
+        console.log("Error:", err);
+        res.status(500).json({ error: "Internal server error", details: err });
+    }
+});
+
 
 
 router.post('/topics/isSubmitted/:val', async (req, res) => {
