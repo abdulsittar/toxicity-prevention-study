@@ -20,7 +20,6 @@ import Stack from '@mui/material/Stack';
 import Linkify from 'react-linkify';
 import SendIcon from '@mui/icons-material/Send';
 import { useMediaQuery } from 'react-responsive';
-//import 'emoji-mart/css/emoji-mart.css';
 import InputEmoji from "react-input-emoji";
 import MoodIcon from '@mui/icons-material/Mood';
 import React from 'react';
@@ -30,12 +29,10 @@ import { COLORS } from "../values/colors";
 import linkifyit from 'linkify-it';
 import { Write_something, comments } from '../../constants';
 import './post.css';
-import { toast } from 'react-toastify';
-//import User from "../../../../server/models/User";
+import { toast } from 'react-toastify'; 
 import * as timeago from 'timeago.js'; 
 import CommentEditModal from "../commentToastModel/CommentEditModal";
 
-// Add this after the imports
 const srLatinLocale = (number, index) => {
   return [
     ['malopre', 'upravo sada'],
@@ -56,13 +53,13 @@ const srLatinLocale = (number, index) => {
 };
 
 
-// In the component or at the top level, register the Serbian locale:
+ 
 timeago.register('sr', srLatinLocale);
 
 function Post({onScrolling,  post, classes, isDetail, setHasReadArticle, currentRound, socket}) {
   const [comments, setComments] = useState([]);
   const inputEl = React.useRef<HTMLInputElement>(null);
-  //console.log(post);
+ 
   const [like, setLike] = useState(post.likes.length);
   const [dislike, setDislike] = useState(post.dislikes.length);
   const [isLiked, setIsLiked] = useState(false);
@@ -82,7 +79,7 @@ function Post({onScrolling,  post, classes, isDetail, setHasReadArticle, current
   const [repostId, setRepostId] = useState(post.reposts[post.reposts? post.reposts.length: 0]);
   
   
-  const [rank, setRank] = useState(parseFloat(post.rank.toFixed(2)));//useState(post.reposts? post.reposts.length: 0);
+  const [rank, setRank] = useState(parseFloat(post.rank.toFixed(2))); 
 
   const [isReposted, setIsReposted] = useState(false);
   const [webViewVisible, setWebViewVisible] = useState(false);
@@ -106,10 +103,9 @@ const [webViewUrl, setWebViewUrl] = useState('');
   const extractUrls = require("extract-urls");
   let url = "https://edition.cnn.com/2024/07/10/europe/russian-missile-strike-kyiv-hospital-un-intl-hnk/index.html"
   const [urls, setUrls] = useState(post.thumb);
-  const [thumbnail, setThumbnail] = useState('');
-  //const [thumbnail, setThumbnail] = useState('/images/16251726578112.jpeg');
+  const [thumbnail, setThumbnail] = useState(''); 
   var cover = true;
-  // State for controlling popup visibility
+ 
   
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -117,10 +113,9 @@ const [webViewUrl, setWebViewUrl] = useState('');
   const [isDisHovered, setIsDisHovered] = useState(false);
   
  useEffect(() => {
-  // Check if the post is new
+ 
   setIsNew(post.createdAt ? false : true);
-
-  // Define the function to fetch the thumbnail
+ 
   const handleFetchThumbnail = async () => {
     if (!post.thumb) {
       console.log("No thumbnail URL provided.");
@@ -138,98 +133,64 @@ const [webViewUrl, setWebViewUrl] = useState('');
       console.error('Error fetching thumbnail:', error);
     }
   };
-
-  // Fetch thumbnail only if there is a thumbnail URL and it hasn't been fetched already
+ 
   if (post.thumb && !thumbnail) {
     handleFetchThumbnail();
   }
 }, [post.thumb, thumbnail]);
   
-      const handleMouseEnter = e => {
-        setIsHovered(true);
-      };
+  
 
-      const handleMouseLeave = e => {
-        setIsHovered(false);
-      };
-
-      const handleDisMouseEnter = e => {
-        setIsDisHovered(true);
-      };
-
-      const handleDisMouseLeave = e => {
-        setIsDisHovered(false);
-      };
-      
-      const onButtonClick = () => {
-        // `current` points to the mounted text input element
-        inputEl.current.focus();
-      };
-  //console.log("here is the url")
-  //console.log(PF)
-    /*const fetchComments = async () => {
-    console.log("fetchComments")
-    const res = await axios.get( + user._id+`?page=${index}`);
-    console.log(res.data)
-    console.log("fetch posts")
-    if(res.data.length > 0){
-      setPosts((prevItems) => [...prevItems, ...res.data
-      //.sort((p1,p2) => {return new Date(p2.createdAt) - new Date(p1.createdAt);})
-      ]); 
-    res.data.length > 0 ? setHasMore(true) : setHasMore(false);
-      //setIndex((index) => index + 1);
-      increment(index, 1);
-    } else {
-      //setPosts([]);
-      //setIndex((index) => 0);
-      //increment(index, -index);
-    }
-
-      //setPreFilter(whPosts);
-      console.log(whPosts);
-      //setPosts(res.data.sort((p1,p2) => {return new Date(p2.createdAt) - new Date(p1.createdAt);})); 
-  };*/
-
-
-  useEffect(() => {
-    //setIsLiked(post.likes.includes(currentUser._id));
-    //setIsLikedByOne(post.likes.length == 1)
-    //setIsDisliked(post.dislikes.includes(currentUser._id));
-    //setIsDislikedByOne(post.dislikes.length == 1)
+  useEffect(() => { 
     
     console.log("useEffect")
-    console.log(post)
-    //setComments(post.comments.reverse());
-    //setComments([...post.comments].reverse());
+    console.log(post) 
 
   }, [currentUser._id, post.likes, post.dislikes]);
   
   useEffect(() => {
   setComments([...post.comments].reverse());
-}, [post.comments]);
+}, [post.comments]); 
 
-  // Listen for new comments via socket and update local state
-  useEffect(() => {
+useEffect(() => {
   if (!socket) return;
 
-  const handler = (data) => {
-    if (!data?.comment) return;
-
-    const { comment, postId, senderId } = data;
-    console.log(comment);
-    console.log("comment");
-    if (senderId === currentUser._id) return;
+  // Handle new comment
+  const handleNewComment = (data) => {
+    const { comment, postId } = data;
     if (postId !== post._id) return;
 
     setComments(prev => {
       if (prev.some(c => c._id === comment._id)) return prev;
-      return [comment, ...prev];
+      return [comment, ...prev]; // prepend new comment
     });
   };
 
-  socket.on('newComment', handler);
-      return () => socket.off('newComment', handler);
-}, [socket, post._id, currentUser._id]);
+  // Handle updated comment
+  const handleUpdateComment = (data) => {
+    const { comment, postId } = data;
+    if (postId !== post._id) return;
+
+    // Normalize comment with paraphrasedBody
+    const normalizedComment = {
+      ...comment,
+      paraphrasedBody: comment.paraphrasedBody || comment.body,
+      llmFeedback: comment.llmFeedback || "{}"
+    };
+
+    setComments(prev =>
+      prev.map(c => (c._id === normalizedComment._id ? normalizedComment : c))
+    );
+  };
+
+  socket.on('newComment', handleNewComment);
+  socket.on('updateComment', handleUpdateComment);
+
+  return () => {
+    socket.off('newComment', handleNewComment);
+    socket.off('updateComment', handleUpdateComment);
+  };
+}, [socket, post._id]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -270,24 +231,7 @@ const [webViewUrl, setWebViewUrl] = useState('');
     console.log("enter", text);
 
   }
-
-  const handleReadChange = () => {
-    const token = localStorage.getItem('token');
-      axios.put("/users/" + currentUser._id + "/read", 
-      { postId: post._id, 
-        headers: { 'auth-token': token }
-      });
-  };
-
-  function handleOnEnter(text) {
-    console.log("enter", text);
-  }
-
-  // postDetails
-  const postDetailsHandler = async (e) => {
-    e.preventDefault();
-  };
-
+ 
 const submitHandler2 = async (e) => {
   e.preventDefault();
   
@@ -302,28 +246,13 @@ const submitHandler = async (e) => {
     try {
      
       const lc = await axios.post("/posts/" + post._id + "/comment", { userId: currentUser._id, username: currentUser.username, txt: inputValue, postId: post._id, headers: { 'auth-token': token } });
-      //setComments((prev) => [lc.data, ...prev]);
+ 
       const gptRes = await axios.post(
       "/postdetail/paraphrase",
     { text: lc.data.body  , headers: { 'auth-token': token } }
       );
       const { paraphrasedText, feedback } = gptRes.data;
-      
-     /* await axios.put(
-      `/posts/${lc.data._id}/updateComment/`,
-      { 
-      userId: currentUser._id, 
-      username: currentUser.username, 
-      postId: post._id,
-      txt: inputValue, 
-      
-      original: preValue,
-      paraphrasedBody: paraphrasedText,
-      llmFeedback: feedback, 
-      headers: { 'auth-token': token }
-      }
-      );*/ 
-      //setInputValue('');      
+   
       setPendingComment(lc.data);
       setPendingParaphrase(paraphrasedText);
       
@@ -337,125 +266,11 @@ try {
 setPendingFeedback(parsedFeedback);
       setEditModalOpen(true);
        
-      /*showCommentToast(async (editedText) => {
-      if (!editedText.trim()) return;
-      try {
-        // 6️⃣ Update comment with edited text
-        const updateRes = await axios.put(`/posts/${lc.data._id}/updateComment/`,
-          {userId: currentUser._id, username: currentUser.username, txt: editedText, postId: post._id, headers: { 'auth-token': token } 
-            });
-        // 7️⃣ Update state in-place
-        setComments((prev) =>
-          prev.map((c) =>
-            c._id === lc.data._id ? { ...c, body: updateRes.data.body } : c
-          )
-        );
-        
-        // Emit socket event to notify other users
-    if (socket) {
-      socket.emit("newComment", { postId: post._id, comment: editedText });
-    }
-        
-      } catch (err) {
-        console.error("Error updating comment:", err);
-      }
-    }, paraphrasedText,
-  () => {
-    // ❌ user clicked "Cancel"
-    console.log("User cancelled comment edit");
-  }
-); */ 
     } catch (err) {
       console.log("Error posting comment:", err);
   }
 };
-// submit a comment
-  /*const onEnterSubmitHandler2 = async () => {
-  const preValue= inputValue;
-  if (removeHtmlTags(inputValue).trim().length === 0) return;
-    const token = localStorage.getItem('token');
-    console.log(removeHtmlTags(inputValue).trim().length);
-    console.log("currentUser")
-    console.log(currentUser)
-    if (removeHtmlTags(inputValue).trim().length === 0) return;
-
-    try {
-      setInputValue('');
-      const lc = await axios.post("/posts/" +  post._id + "/comment", 
-      { 
-      userId: currentUser._id, 
-      username: currentUser.username, 
-      txt: inputValue, 
-      postId: post._id,
-      headers: { 'auth-token': token } });
-      
-      setComments((prev) => [lc.data, ...prev]); 
-      const gptRes = await axios.post( "/postdetail/paraphrase",
-      { 
-          text: lc.data.body,
-          headers: { 'auth-token': token } 
-      }
-      );
-      const { paraphrasedText, feedback } = gptRes.data;
-      
-      await axios.put(
-      `/posts/${lc.data._id}/updateComment/`,
-      { 
-        userId: currentUser._id, 
-      username: currentUser.username, 
-      postId: post._id,
-      txt: inputValue, 
-      
-      original: preValue,
-      paraphrasedBody: paraphrasedText,
-      llmFeedback: feedback,  
-      headers: { 'auth-token': token }
-      }
-      );
-      setInputValue('');
-      showCommentToast(async (editedText) => {
-      if (!editedText.trim()) return; 
-      try {
-        // 6️⃣ Update comment with edited text
-      const updateRes = await axios.put(`/posts/${lc.data._id}/updateComment/`,{
-
-        userId: currentUser._id, 
-      username: currentUser.username, 
-      postId: post._id,
-      txt: inputValue, 
-      
-      original: preValue,
-      paraphrasedBody: paraphrasedText,
-      llmFeedback: feedback
-        
-        , headers: { 'auth-token': token } 
-      }); 
-        // 7️⃣ Update state in-place
-        setComments((prev) =>
-          prev.map((c) =>
-            c._id === lc.data._id ? { ...c, body: updateRes.data.body } : c
-          )
-        );
-        
-      if (socket) {
-        socket.emit("newComment", { postId: post._id, comment: editedText });
-      }
-        
-      } catch (err) {
-        console.error("Error updating comment:", err);
-      }
-    }, paraphrasedText,
-  () => {
-    // ❌ user clicked "Cancel"
-    console.log("User cancelled comment edit");
-  }
-);  
-    } catch (err) { 
-      console.log("Posted a comment");
-      console.log(err);
-  }
-};*/
-
+ 
 
 const onEnterSubmitHandler = async () => {
   const token = localStorage.getItem("token");
@@ -477,13 +292,9 @@ const preValue= inputValue;
     setInputValue("");
 
     if (socket) {
-      socket.emit("newComment", { postId: post._id, comment: lc.data 
-      });
+      socket.emit("newComment", { postId: post._id, comment: lc.data });
     }
-
-    // Prepend new comment to UI
-    //setComments(prev => [lc.data, ...prev]);
-    //setInputValue("");
+ 
 
     const gptRes = await axios.post(
       "/postdetail/paraphrase",
@@ -491,20 +302,7 @@ const preValue= inputValue;
       );
       const { paraphrasedText, feedback } = gptRes.data;
       
-      /*await axios.put(
-      `/posts/${lc.data._id}/updateComment/`,
-      { 
-      userId: currentUser._id, 
-      username: currentUser.username, 
-      postId: post._id,
-      txt: inputValue, 
-      
-      original: preValue,
-      paraphrasedBody: paraphrasedText,
-      llmFeedback: feedback, 
-      headers: { 'auth-token': token }
-      }
-      );*/    
+       
       setPendingComment(lc.data);
       setPendingParaphrase(paraphrasedText);
       let parsedFeedback = feedback;
@@ -522,7 +320,7 @@ setPendingFeedback(parsedFeedback);
   }
 };
 
-// This callback is passed to the modal
+ 
 const handleEditSubmit = async (editedText) => {
 
   if (removeHtmlTags(editedText).trim().length === 0) return;
@@ -531,7 +329,7 @@ const handleEditSubmit = async (editedText) => {
   try {
     const token = localStorage.getItem("token");
 
-     const updateRes = await axios.put(
+     const res = await axios.put(
       `/posts/${pendingComment._id}/updateComment/`,
       { 
       userId: currentUser._id, 
@@ -544,24 +342,21 @@ const handleEditSubmit = async (editedText) => {
       llmFeedback: pendingFeedback, 
       headers: { 'auth-token': token }
       }
-      ); 
-
-
-    //setComments((prev) =>
-      //prev.map((c) => (c._id === updateRes.data._id ? updateRes.data : c))
-    //);
-    /*setComments(prev =>
-      prev.map(c =>
-        c._id === pendingComment._id
-          ? { ...c, editedBody: updateRes.data.editedBody }
-          : c
-      )
-    );*/
+      );  
     setInputValue("");
 
+    const updatedComment = {
+      ...res.data,
+      paraphrasedBody: res.data.paraphrasedBody || res.data.body,
+      llmFeedback: res.data.llmFeedback || "{}"
+    };
+
+    setComments(prev =>
+      prev.map(c => (c._id === updatedComment._id ? updatedComment : c))
+    );
+
     if (socket) {
-      socket.emit("newComment", { postId: post._id, comment: updateRes.data 
-      });
+      socket.emit("updateComment", { postId: post._id, comment: updatedComment });
     }
 
     setEditModalOpen(false);
@@ -569,44 +364,7 @@ const handleEditSubmit = async (editedText) => {
     console.error("Error updating comment:", err);
   }
 };
-
-  /*const likeHandler = () => {
-    try {
-      axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
-    } catch (err) { }
-    setLike(isLiked ? like - 1 : like + 1);
-    setIsLiked(!isLiked);
-    if (post.likes.length == 1){
-      setIsLikedByOne(false);
-    }
-  };*/
-
-
-  const repostHandler = async () => {
-    const token = localStorage.getItem('token');
-    try {
-      axios.post("/posts/" + post._id + "/repost", { userId: currentUser._id , headers: { 'auth-token': token }});
-    } catch (err) {
-      console.log(err)
-     }
-    setRepost(isReposted ? repost + 1 : repost + 1);
-    setIsReposted(true);
-
-  };
-
-  function getTextLength(text) {
-    // Regular expression to match URLs starting with "http://" or "https://"
-    const urlRegex = /(https?:\/\/\S+)/g;
-    
-    // Remove URLs from the text
-    const textWithoutUrls = text.replace(urlRegex, '');
-    
-    // Calculate the length of the text without URLs
-    const lengthWithoutUrls = textWithoutUrls.length;
-    
-    return lengthWithoutUrls;
-}
-
+  
   const likeHandler = async () => {
     //if(!isDisliked){
       const token = localStorage.getItem('token');
@@ -694,307 +452,7 @@ const handleEditSubmit = async (editedText) => {
     }
   }*/
   };
-
-  const toggleWebView = async () => {
-    setHasReadArticle(true);
-    
-    console.log("🟢 toggleWebView called - Adding green bar!");
-    
-    try {
-        const token = localStorage.getItem('token');
-        const lc = await axios.post("/posts/" + currentUser._id + "/track-view", {postId: post._id, userId: currentUser._id, headers: { 'auth-token': token }});
-        console.log("Viewpost updated successfully.");
-        
-    } catch (error) {
-        console.error("Error updating view post:", error);
-
-    }
-    
-    toast.info(
-      <div style={{
-          width: '1000px',
-          maxWidth: '95vw', // This ensures it fits on smaller screens
-          height: '1000px',
-          maxHeight: '90vh',
-          backgroundColor: 'white',
-          borderRadius: '10px',
-          padding: '0px',
-          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          overflowY: 'auto',
-          position: 'relative'
-      }}>
-          {/* Green bar at the top of the webview */}
-          <div style={{ 
-            width: '100%', 
-            height: '8px', 
-            backgroundColor: '#4CAF50',
-            borderRadius: '10px 10px 0 0',
-            marginBottom: '15px',
-            position: 'absolute',
-            top: '0',
-            left: '0',
-            zIndex: '9999'
-          }}></div>
-          
-          <div style={{ padding: '15px', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <iframe 
-                  src={webLink} 
-                  title="WebView"
-                  style={{
-                      width: '100%',
-                      height: '2000px',
-                      border: 'none',
-                      borderRadius: '8px',
-                  }}
-              />
-          </div>
-          
-          <button 
-              onClick={() => toast.dismiss()} 
-              style={{
-                  position: 'absolute',
-                  top: '0px',
-                  right: '45px',
-                  padding: '8px 16px',
-                  backgroundColor: '#ff4d4f',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  zIndex: '10000'
-              }}
-          >
-              Zatvori
-          </button>
-      </div>,
-      {
-          className: "custom-toast",
-          position: "top-center",
-          icon: false,
-          autoClose: false,
-          hideProgressBar: true,
-          closeButton: false,
-          style: {
-              width: 'auto',
-              maxWidth: '95vw',
-              padding: '0px',
-              margin: '0px'
-          }
-      }
-  );
-};
-
-
-  const toggleWebView3 = async () => {
-    try {
-        const token = localStorage.getItem('token');
-        await axios.post("/posts/" + currentUser._id + "/track-view", {
-            postId: post._id, 
-            userId: currentUser._id,
-            headers: { 'auth-token': token }
-        });
-
-        console.log("Viewpost updated successfully.");
-    } catch (error) {
-        console.error("Error updating view post:", error);
-    }
-    
-    toast.info(
-        <div 
-            style={{ 
-                display: 'flex', 
-                justifyContent: 'center', 
-                alignItems: 'center', 
-                width: '100vw', 
-                height: '100vh', 
-                backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent overlay
-                position: 'fixed', 
-                top: 0, 
-                left: 0, 
-                zIndex: 1000,
-            }}
-        >
-            <div style={{
-                width: '600px', // Fixed width
-                height: '80vh', // Responsive height
-                backgroundColor: 'white',
-                borderRadius: '10px',
-                padding: '0px',
-                position: 'relative',
-                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}>
-                {/* Green bar at the top of the webview */}
-                <div style={{ 
-                  width: '100%', 
-                  height: '4px', 
-                  backgroundColor: '#4CAF50',
-                  borderRadius: '10px 10px 0 0',
-                  marginBottom: '15px'
-                }}></div>
-                
-                <div style={{ padding: '15px', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <iframe 
-                        src={webLink} 
-                        title="WebView"
-                        style={{
-                            width: '100%', 
-                            height: '100%', 
-                            border: 'none', 
-                            borderRadius: '8px',
-                        }}
-                    />
-                </div>
-
-                <button 
-                    onClick={() => toast.dismiss()} 
-                    style={{
-                        position: 'absolute',
-                        top: '35px',
-                        right: '25px',
-                        padding: '8px 16px',
-                        backgroundColor: '#ff4d4f',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        zIndex: '10000'
-                    }}
-                >
-                    Zatvori
-                </button>
-            </div>
-        </div>,
-        {
-            position: "top-center",
-            autoClose: false,
-            hideProgressBar: true,
-            closeButton: false,
-            className: "webview-toast-container",
-        }
-    );
-};
-
-  const toggleWebView2 = async () => {
-    const screenWidth = window.innerWidth; // Get the screen width
-    //const iframeWidth = screenWidth <= 800 ? '65vh' : '125vh'; // Adjust width based on screen size
-  
-    let iframeWidth;
-    if (screenWidth < 550) {
-        iframeWidth = '45vh';  // Very small screens
-    } else if (screenWidth >= 550 && screenWidth < 600) {
-        iframeWidth = '45vh';  // Small screens
-    } else if (screenWidth >= 731 && screenWidth < 730) {
-        iframeWidth = '45vh';  // Slightly larger screens
-    } else if (screenWidth >= 731 && screenWidth < 800) {
-        iframeWidth = '45vh';  // Medium screens
-    } else if (screenWidth >= 801 && screenWidth < 1200) {
-        iframeWidth = '45vh';  // Large screens
-    } else {
-        iframeWidth = '45vh';  // Extra large screens
-    }
-    
-    iframeWidth = '25vh';
-    
-    try {
-      const token = localStorage.getItem('token');
-      const lc = await axios.post("/posts/" + currentUser._id + "/track-view", {postId: post._id, userId: currentUser._id, headers: { 'auth-token': token }});
-      
-      
-      console.log("Viewpost updated successfully.");
-  } catch (error) {
-      console.error("Error updating view post:", error);
-  }
-    
-    toast.info(
-      <div 
-          style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              alignItems: 'center', 
-              width: '80vw', 
-              height: '80vh', 
-              backgroundColor: 'white', 
-              overflow: 'hidden',
-              borderRadius: '10px',
-              position: 'relative'
-          }}
-      >
-          {/* Green bar at the top of the webview */}
-          <div style={{ 
-            width: '100%', 
-            height: '4px', 
-            backgroundColor: '#4CAF50',
-            borderRadius: '10px 10px 0 0',
-            marginBottom: '10px'
-          }}></div>
-          
-          <div style={{
-              width: '100%',
-              height: '100%',
-              overflow: 'auto',
-              position: 'relative',
-              padding: '15px',
-              boxSizing: 'border-box'
-          }}>
-              <iframe src={webLink} title="WebView"
-                  style={{
-                      width: '100%',
-                      height: '100%',
-                      border: 'none',
-                      borderRadius: '8px',
-                      display:'block'
-                  }}
-              />
-          </div>
-          
-          <button 
-              onClick={() => toast.dismiss()} 
-              style={{
-                  position: 'absolute',
-                  top: '35px',
-                  right: '25px',
-                  padding: '10px 20px',
-                  backgroundColor: '#ff4d4f',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '5px',
-                  cursor: 'pointer',
-                  fontSize: '16px',
-                  zIndex: '10000'
-              }}
-          >
-              Zatvori
-          </button>
-      </div>,
-      {
-          position: "top-center",
-          autoClose: false,
-          hideProgressBar: true,
-          closeButton: false,
-          className: "webview-toast-container",
-          style: {
-              width: 'auto',
-              maxWidth: '95vw',
-              padding: '0px',
-              margin: '0px'
-          }
-      }
-  );
-
-};
-
-  const showCommentsHandler = () => {
-    var bottomdiv = document.getElementsByClassName("form")
-    bottomdiv.style.display="none";
-  }
+ 
 
   function removeHtmlTags(text) {
     // Regular expression to match HTML tags
@@ -1007,11 +465,7 @@ const handleEditSubmit = async (editedText) => {
     
 }
 
-const triangleStyle = {
-  position: "relative",
-  margin: isDetail && "5px 0",
-  background:  "#F5F5F5" 
-};
+ 
 
 const triangleOverlayStyle = {
   content: '""',
@@ -1026,17 +480,9 @@ const triangleOverlayStyle = {
 
 
   function handleViewedChange(view, post) {
-    /*if(view == true){
-    console.log("view ", view);
-    onScrolling(post._id);
-    }*/
+
   }
-  //<img src={PF + post.img} alt="" className={classes.postImg} />
-  //to={isDetail? `/profile/${repostUser.username}`: `/profile/${repostUser.username}` }
-  // to={isDetail? `/profile/${repostUser.username}`: `/profile/${repostUser.username}`}
-  //to={isDetail? `/profile/${user.username}`: `/profile/${user.username}` }
-  //to={isDetail? `/profile/${user.username}`: `/profile/${user.username}`}
-  //
+ 
 
   return (
     <InView as="div" onChange={(inView, entry) => handleViewedChange(inView, post)}>
@@ -1066,12 +512,7 @@ const triangleOverlayStyle = {
             <span className={classes.postDate} style={{margin: '0px 0px 0px 20px',}}>{" Reposted by: "+ repost}</span>
           
           </div>: <div></div>}
-          { /*(repost > 0)? 
-          <div className={classes.postTopRight}>
-          <Link style={{textDecoration: 'none', color: COLORS.textColor}} onClick={repostHandler}>
-            
-          { (isMobileDevice && isTabletDevice) ? <Stack direction="row" spacing={2}>
-            <Button variant="contained" endIcon={<SendIcon />}> Repost </Button></Stack> :<ArrowForwardIcon /> }  </Link></div>: <div></div>*/}
+  
 
         </div>
         
@@ -1087,37 +528,20 @@ const triangleOverlayStyle = {
             </span>
             </Link>
             <span className={classes.postDate} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>{format(post.createdAt, 'sr')}</span>
-            {/*<span className={classes.postDate} style={{margin: '0px 0px 0px 20px',}}>{"group= "+ post.userGroup +" | round# "+ post.treatment+" | post label= "+ post.content+" | ranking= "+post.rank+" | ukraine score= "+post.ukraine+" | disinfo score= "+post.disinfo}</span>*/}
+             
           </div>
           
-          { /*(repost < 1)?
-          <div className={classes.postTopRight} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
-          <Link style={{textDecoration: 'none', color: COLORS.textColor}} onClick={repostHandler}>
-            
-          { (isMobileDevice && isTabletDevice) ? <Stack direction="row" spacing={2}>
-            <Button variant="contained" endIcon={<SendIcon />}> Repost </Button></Stack> :<ArrowForwardIcon /> }  </Link></div>: <div></div>
-  */}
+           
 
         </div>
         
         <div className={classes.postCenter} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
         <Linkify componentDecorator={(decoratedHref, decoratedText, key) => (<a target="blank" rel="noopener noreferrer" href={decoratedHref} key={key} > {decoratedText} </a>)}>
           <div className={classes.postText}  style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
-            {/*!isDetail && post?.desc.length > 0? */}
+             
               <div className={classes.content}  style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }} dangerouslySetInnerHTML={{ __html: post?.desc }}> 
-              
-                  {/*<Link to={{pathname:`/postdetail/${user.username}`, state:{myObj: currentPost}}}></Link>*/}
-                </div>
-            {/*!isDetail && !["pro ukraine", "pro russia", "mixed", "neutral", "neutral", "neutral"].includes(post.content) && (<button 
-                onClick={toggleWebView} 
-                style={{ display: 'inline-block', verticalAlign: 'middle', padding: '0px 20px', margin: '0px 20px'}}>
-                Read full article
-            </button>)*/}
-            {/*}:
-            <div className={classes.postText}  style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }} dangerouslySetInnerHTML={{ __html: post?.desc }}>
-             </div>}*/}
-            
-            
+             
+                </div> 
             {thumbnail && (
               <div  style={{ marginTop:"20px", background: repost>0 ? "#F5F5F5" : "#ffffff", display: 'flex', justifyContent: 'center',alignItems: 'center',}}>
                   <img src={thumbnail} alt="Thumbnail" style={{ width: '100%', maxWidth: '600px', height: 'auto',cursor: 'default' }} />
@@ -1125,8 +549,7 @@ const triangleOverlayStyle = {
           )}
            </div>
         </Linkify>
-          
-          
+           
         </div>
         <div className={classes.postBottom} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
           <div className={classes.postBottomLeft} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
@@ -1160,15 +583,8 @@ const triangleOverlayStyle = {
             <div className={classes.commentTop} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
             {comments.slice(0).map((item, i) => {
               console.log(i);
-              console.log(item._id);
-                      //return <CommentSA key={item._id} post={post} comment={item} isDetail={false}/>
-              //if(isDetail===false && i < 5) {
-              //    return <CommentSA key={item._id} post={post} comment={item} isDetail={false}/>
-
-              //} else if(isDetail === true) {
-                  return <CommentSA key={item._id} post={post} comment={item} isDetail={false}/>
-                  
-              //}
+              console.log(item._id); 
+                  return <CommentSA key={item._id} post={post} comment={item} isDetail={false}/> 
               })
             }
         </div>

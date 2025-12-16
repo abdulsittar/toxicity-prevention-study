@@ -202,7 +202,7 @@ useEffect(() => {
       }
     });
 
-    newSocket.on('newComment', (data) => {
+    /*newSocket.on('newComment', (data) => {
       console.log('Received newComment', data);
       setPosts((prev) =>
         Array.isArray(prev)
@@ -213,14 +213,14 @@ useEffect(() => {
             )
           : prev
       );
-    });
+    });*/
 
     // cleanup on unmount
     return () => {
       console.log('🧹 Cleaning up socket listeners...');
       newSocket.off('getUsers');
       newSocket.off('getMessage');
-      newSocket.off('newComment');
+      //newSocket.off('newComment');
       newSocket.disconnect();
     };
   } catch (err) {

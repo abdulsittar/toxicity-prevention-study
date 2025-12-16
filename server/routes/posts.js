@@ -3923,7 +3923,23 @@ router.put("/:id/updateComment", verifyToken, async (req, res) => {
     }
 
     await comment.save();
-    res.status(200).json(comment);
+    
+    const responseComment = {
+      _id: comment._id,
+      postId: comment.postId,
+      userId: comment.userId,
+      username: comment.username,
+      body: comment.body,
+      original: comment.original,
+      paraphrasedBody: comment.paraphrasedBody,
+      llmFeedback: comment.llmFeedback,
+      likes: comment.likes || [],
+      dislikes: comment.dislikes || [],
+      createdAt: comment.createdAt,
+      updatedAt: comment.updatedAt,
+    };
+
+    res.status(200).json(responseComment); 
 
   } catch (err) {
     res.status(500).json(err.message);
