@@ -455,12 +455,15 @@ if (preProfile === " ") {
     console.log(whPosts);
     const token = localStorage.getItem('token');
     const res = username ?  await axios.get("/posts/profile/" + username+`?page=${index}`, {headers: { 'auth-token': token, 'userId': user._id }}) : await axios.get(whPosts + user._id+`?page=${index}`, {headers: { 'auth-token': token, 'userId': user._id }});
-    console.log(res.data);
+    console.log("📦 Raw response from backend:", res.data);
+    console.log("📊 Number of posts received:", Array.isArray(res.data) ? res.data.length : 'NOT AN ARRAY');
+    console.log("📄 Response type:", typeof res.data);
     console.log("fetch posts");
-    if(res.data.length){
-    if(res.data.length > 0){
+    
+    // Check if we got valid posts data
+    if(Array.isArray(res.data) && res.data.length > 0){
         setPosts([])
-        console.log("Fetched post for pagen2", posts.length); 
+        console.log("✅ Setting posts. Count:", res.data.length); 
         setPosts(res.data)
         //setPosts((prevItems) => [...prevItems, ...res.data
             //.sort((p1,p2) => {return new Date(p2.createdAt) - new Date(p1.createdAt);})
@@ -470,17 +473,23 @@ if (preProfile === " ") {
         increment(index, 0);
         setProgress(100);
     } else {
+        // No posts available (empty array, null, undefined, or error) - redirect to post-survey
         setHasMore(false);
         setProgress(100);
-        //setPosts([]);
-        //setIndex((index) => 0);
-        //increment(index, -index);
+        console.log("❌ No posts available on initial fetch. Redirecting to post-survey...");
+        toast.info("All posts completed! Moving to post-survey...", {
+          position: "top-center",
+          autoClose: 2000
+        });
+        
+        setTimeout(() => {
+          history.push(`/postsurvey/${currentUser.username}`);
+        }, 2000);
     }
 
     //setPreFilter(whPosts);
     console.log(whPosts);
     //setPosts(res.data.sort((p1,p2) => {return new Date(p2.createdAt) - new Date(p1.createdAt);})); 
-}
 };
 
 function updateViewdPosts( post) {
@@ -503,33 +512,58 @@ function updateViewdPosts( post) {
   }
 
   try {
+    // Save the survey responses
     await axios.post("/posts/responses", {
       postId: currentSurveyPost._id,
       userId: user._id,
       responses: surveyResponses
     });
 
-    // Update local UI
-    setPosts(prev =>
-      prev.map(p =>
-        p._id === currentSurveyPost._id
-          ? {
-              ...p,
-              discussionResponses: [
-                ...(p.discussionResponses || []),
-                { userId: user._id, responses: surveyResponses }
-              ]
-            }
-          : p
-      )
-    );
-
     setOpenSurvey(false);
 
-    // Move to next post
+    // Fetch next post from backend
     const nextIndex = index + 1;
-    setIndex(nextIndex);
-    fetchPost(nextIndex);
+    const token = localStorage.getItem('token');
+    
+    console.log("🔄 Fetching next post. Current index:", index, "Next index:", nextIndex);
+    
+    try {
+      const res = await axios.get(`/posts/timelinePag/${user._id}?page=${nextIndex}`, {
+        headers: { 'auth-token': token, 'userId': user._id }
+      });
+
+      console.log(`📦 Fetched page ${nextIndex}:`, res.data);
+      console.log(`📊 Number of posts on page ${nextIndex}:`, Array.isArray(res.data) ? res.data.length : 'NOT AN ARRAY');
+
+      if (Array.isArray(res.data) && res.data.length > 0) {
+        // More posts available - show the next one
+        console.log(`✅ More posts available. Setting ${res.data.length} posts.`);
+        setPosts(res.data);
+        setIndex(nextIndex);
+      } else {
+        // No more posts - redirect to post-survey
+        console.log("❌ No more posts available. Redirecting to post-survey...");
+        toast.info("All posts completed! Moving to post-survey...", {
+          position: "top-center",
+          autoClose: 2000
+        });
+        
+        setTimeout(() => {
+          history.push(`/postsurvey/${currentUser.username}`);
+        }, 2000);
+      }
+    } catch (fetchErr) {
+      console.error("❌ Error fetching next post:", fetchErr);
+      console.log("❌ Redirecting due to fetch error...");
+      // If fetch fails, also redirect
+      toast.info("All posts completed! Moving to post-survey...", {
+        position: "top-center",
+        autoClose: 2000
+      });
+      setTimeout(() => {
+        history.push(`/postsurvey/${currentUser.username}`);
+      }, 2000);
+    }
 
   } catch (err) {
     console.error(err);
@@ -737,30 +771,10 @@ if (preProfile === " ") {
                 />
               ))
             ) : (
-  <div style={{ textAlign: "center", marginTop: "20px" }}>
-    <h3>No posts yet</h3>
-
-    <button
-      onClick={() => {
-        toast.info("Posts finished — moving to post survey...");
-        history.push(`/postsurvey/${currentUser.username}`);
-      }}
-      style={{
-        marginTop: "15px",
-        padding: "10px 20px",
-        backgroundColor: "red",
-        color: "white",
-        border: "none",
-        borderRadius: "8px",
-        fontSize: "16px",
-        cursor: "pointer",
-      }}
-    >
-      MOVE TO POST SURVEY
-    </button>
-  </div>
-)
-}
+              <div style={{ textAlign: "center", marginTop: "20px" }}>
+                <h3>Loading next post...</h3>
+              </div>
+            )}
           </div>
     
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px', maxWidth: '800px', margin: '32px auto 0' }}>
