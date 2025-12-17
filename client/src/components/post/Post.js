@@ -35,20 +35,20 @@ import CommentEditModal from "../commentToastModel/CommentEditModal";
 
 const srLatinLocale = (number, index) => {
   return [
-    ['malopre', 'upravo sada'],
-    ['pre %s sekundi', 'za %s sekundi'],
-    ['pre 1 minut', 'za 1 minut'],
-    ['pre %s minuta', 'za %s minuta'],
-    ['pre 1 sat', 'za 1 sat'],
-    ['pre %s sati', 'za %s sati'],
-    ['pre 1 dan', 'za 1 dan'],
-    ['pre %s dana', 'za %s dana'],
-    ['pre 1 nedelju', 'za 1 nedelju'],
-    ['pre %s nedelja', 'za %s nedelja'],
-    ['pre 1 mesec', 'za 1 mesec'],
-    ['pre %s meseci', 'za %s meseci'],
-    ['pre 1 godinu', 'za 1 godinu'],
-    ['pre %s godina', 'za %s godina']
+    ['gerade eben', 'jetzt'],
+    ['vor %s Sekunden', 'in %s Sekunden'],
+    ['vor 1 Minute', 'in 1 Minute'],
+    ['vor %s Minuten', 'in %s Minuten'],
+    ['vor 1 Stunde', 'in 1 Stunde'],
+    ['vor %s Stunden', 'in %s Stunden'],
+    ['vor 1 Tag', 'in 1 Tag'],
+    ['vor %s Tagen', 'in %s Tagen'],
+    ['vor 1 Woche', 'in 1 Woche'],
+    ['vor %s Wochen', 'in %s Wochen'],
+    ['vor 1 Monat', 'in 1 Monat'],
+    ['vor %s Monaten', 'in %s Monaten'],
+    ['vor 1 Jahr', 'in 1 Jahr'],
+    ['vor %s Jahren', 'in %s Jahren']
   ][index];
 };
 
@@ -84,6 +84,7 @@ const [webViewUrl, setWebViewUrl] = useState('');
   
   const [isNew, setIsNew] = useState(false);
   const [user, setUser] = useState({});
+  const [systemUserIds, setSystemUserIds] = useState([]);
   const [text, setText] = useState('');
   const [webLink, setWebLink] = useState(post.webLinks);
   const [inputValue, setInputValue] = useState("");
@@ -109,6 +110,18 @@ const [webViewUrl, setWebViewUrl] = useState('');
  useEffect(() => {
  
   setIsNew(post.createdAt ? false : true);
+ 
+  // Fetch system user IDs
+  const fetchSystemUserIds = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get('/users/system-users', {headers: { 'auth-token': token }});
+      setSystemUserIds(res.data.systemUserIds);
+    } catch (err) {
+      console.error('Error fetching system user IDs', err);
+    }
+  };
+  fetchSystemUserIds();
  
   const handleFetchThumbnail = async () => {
     if (!post.thumb) {
@@ -189,17 +202,30 @@ useEffect(() => {
 }, [socket, post._id]);
 
   useEffect(() => {
+    if (systemUserIds.length === 0) return; // Wait for system user IDs to load
+    
     const token = localStorage.getItem('token');
+    
     const fetchUser = async () => {
       const res = await axios.get(`/users?userId=${post.userId}`, {headers: { 'auth-token': token }})
-      setUser(res.data);
+      const userData = res.data;
+      // Override username for preloaded posts (system users)
+      if (systemUserIds.includes(userData._id)) {
+        userData.username = "Der Nachrichtensprecher";
+      }
+      setUser(userData);
     };
     
     const fetchLastRepostUser = async () => {
       console.log("repostId")
     console.log(post.reposts[post.reposts.length-1])
       const res = await axios.get(`/users?userId=${post.reposts[post.reposts.length-1]}`, {headers: { 'auth-token': token }})
-      setRepostUser(res.data);
+      const repostUserData = res.data;
+      // Override username for preloaded reposts (system users)
+      if (systemUserIds.includes(repostUserData._id)) {
+        repostUserData.username = "Der Nachrichtensprecher";
+      }
+      setRepostUser(repostUserData);
     };
   
     
@@ -208,7 +234,7 @@ useEffect(() => {
     if(post.reposts.length > 0){
       fetchLastRepostUser();
     }
-  }, []);
+  }, [systemUserIds]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {

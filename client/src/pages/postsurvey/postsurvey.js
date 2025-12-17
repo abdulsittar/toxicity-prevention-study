@@ -110,9 +110,9 @@ function Postsurvey({ classes }) {
         {currentPage === 1 && (
           <>
             {/* 3.1 Benutzerfreundlichkeit */}
-            <Typography variant="h5" gutterBottom style={{ marginTop: "24px", color: "#1976d2" }}>
-              3.1 Benutzerfreundlichkeit
-            </Typography>
+            {/*<Typography variant="h5" gutterBottom style={{ marginTop: "24px", color: "#1976d2" }}>
+              Benutzerfreundlichkeit
+            </Typography>*/}
         <Typography variant="body2" paragraph>
           Bitte geben Sie an, wie sehr Sie den folgenden Aussagen zustimmen.
         </Typography>
@@ -141,9 +141,9 @@ function Postsurvey({ classes }) {
         <Divider style={{ margin: "24px 0" }} />
 
         {/* 3.2 Manipulationscheck */}
-        <Typography variant="h5" gutterBottom style={{ color: "#1976d2" }}>
+        {/*<Typography variant="h5" gutterBottom style={{ color: "#1976d2" }}>
           3.2 Manipulationscheck – nur für Treatment
-        </Typography>
+        </Typography>*/}
         <Typography variant="body2" paragraph>
           Bitte geben Sie an, wie sehr Sie den folgenden Aussagen zustimmen.
         </Typography>

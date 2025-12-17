@@ -30,10 +30,17 @@
 
 function cleanFeedback(feedback = {}) {
   const REMOVE_PATTERNS = [
-    /^no issues?\.?$/i,
-    /^no .*issues?\.?$/i,
-    /^no .*present\.?$/i,
-    /^no .*detected\.?$/i, 
+   // German 🇩🇪 (generic + specific)
+    /^keine fehler\.?$/i,
+    /^keine .*inhalte\.?$/i,
+    /^keine .*beleidigungen\.?$/i,
+    /^keine .*bedrohungen\.?$/i,
+    /^keine .*angriffe.*\.?$/i,
+    /^keine .*festgestellt\.?$/i,
+    /^keine .*vorhanden\.?$/i,
+    /^keine .*erkannt\.?$/i,
+    /^keine .*\.?$/i,     
+    // Generic
     /^none\.?$/i,
     /^$/ // empty string
   ];
@@ -61,31 +68,31 @@ router.post("/paraphrase", verifyToken, async (req, res) => {
         {
           role: "system",
           content: `
-You are a content moderator for a social media platform. 
-Your job:
-- Lightly edit user posts while preserving meaning.
-- Fix grammar, spelling, clarity, and tone.
-- Evaluate the text for safety issues using these categories:
+Sie sind ein Content-Moderator für eine Social-Media-Plattform.
+Ihre Aufgabe:
+- Bearbeiten Sie Benutzerbeiträge leicht, während Sie die Bedeutung beibehalten.
+- Korrigieren Sie Grammatik, Rechtschreibung, Klarheit und Ton.
+- Bewerten Sie den Text auf Sicherheitsprobleme anhand dieser Kategorien:
 
-TOXICITY: A rude, disrespectful, or unreasonable comment likely to push people away.
-SEVERE_TOXICITY: Strong hateful or aggressive language that could drive users out of a discussion.
-IDENTITY_ATTACK: Negative or hateful comments targeting a person's identity.
-INSULT: Inflammatory or demeaning language toward a person or group.
-PROFANITY: Curse words, obscene or highly offensive language.
-THREAT: Expression of intent to cause pain, harm, or violence.
+TOXICITY: Ein unhöflicher, respektloser oder unvernünftiger Kommentar, der wahrscheinlich Menschen abschreckt.
+SEVERE_TOXICITY: Starke hasserfüllte oder aggressive Sprache, die Nutzer aus einer Diskussion vertreiben könnte.
+IDENTITY_ATTACK: Negative oder hasserfüllte Kommentare, die auf die Identität einer Person abzielen.
+INSULT: Aufhetzende oder herabsetzende Sprache gegenüber einer Person oder Gruppe.
+PROFANITY: Schimpfwörter, obszöne oder stark beleidigende Sprache.
+THREAT: Ausdruck der Absicht, Schmerz, Schaden oder Gewalt zuzufügen.
 
-Return JSON only, with this exact shape:
+Geben Sie nur JSON zurück, mit genau dieser Form:
 {
   "paraphrasedText": "...",
   "feedback": {
-    "SPELLING": "...",
-    "GRAMMAR": "...",
-    "TOXICITY": "...",
-    "SEVERE_TOXICITY": "...",
-    "IDENTITY_ATTACK": "...",
-    "INSULT": "...",
-    "PROFANITY": "...",
-    "THREAT": "..."
+    "Rechtschreibung": "...",
+    "Grammatik": "...",
+    "Toxizität": "...",
+    "Schwere Toxizität": "...",
+    "Identitätsangriff": "...",
+    "Beleidigung": "...",
+    "Vulgäre Sprache": "...",
+    "Bedrohung": "..."
   }
 }
 `

@@ -805,4 +805,24 @@ router.put('/:id/read', verifyToken, async (req, res) => {
     }
 })
 
+// Get system user IDs for identifying predefined posts/comments
+router.get('/system-users', verifyToken, async (req, res) => {
+    try {
+        const systemUserIds = [
+            process.env.Netflix,
+            process.env.SkySport,
+            process.env.Tagesspeigel,
+            process.env.DerSpeigel,
+            process.env.faznet,
+            process.env.zeit,
+            process.env.handle
+        ].filter(Boolean); // Remove any undefined values
+        
+        res.status(200).json({ systemUserIds });
+    } catch (err) {
+        console.error('Error fetching system user IDs', { error: err.message });
+        res.status(500).json({ error: 'Failed to fetch system user IDs' });
+    }
+});
+
 module.exports = router;
