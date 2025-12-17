@@ -29,12 +29,27 @@ function CommentSA ({post, comment, isDetail, classes }) {
   const [isLikedByOne, setIsLikedByOne] = useState(false);
   const [isDislikedByOne, setIsDislikedByOne] = useState(false);
   const [user, setUser] = useState({});
+  const [systemUserIds, setSystemUserIds] = useState([]);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const isMobileDevice = useMediaQuery({ query: "(min-device-width: 480px)"});
   const isTabletDevice = useMediaQuery({ query: "(min-device-width: 768px)"});
 
   const { user: currentUser } = useContext(AuthContext);
+
+  // Fetch system user IDs once on mount
+  useEffect(() => {
+    const fetchSystemUserIds = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get('/users/system-users', {headers: { 'auth-token': token }});
+        setSystemUserIds(res.data.systemUserIds);
+      } catch (err) {
+        console.error('Error fetching system user IDs', err);
+      }
+    };
+    fetchSystemUserIds();
+  }, []);
 
   console.log(comment);
   useEffect(() => {
@@ -49,15 +64,20 @@ function CommentSA ({post, comment, isDetail, classes }) {
   }, [currentUser._id, comment.likes, comment.dislikes]);
 
   useEffect(() => {
-    //const fetchUser = async () => {
-    //  const res = await axios.get(`/users?userId=${post.userId}`)
-    //  setUser(res.data);
-    //};
-    //console.log(post.comments.length)
-    //fetchUser();
+    if (systemUserIds.length === 0) return; // Wait for system user IDs to load
     
-
-  }, [post.userId])
+    const token = localStorage.getItem('token');
+    const fetchUser = async () => {
+      const res = await axios.get(`/users?userId=${comment.userId._id || comment.userId}`, {headers: { 'auth-token': token }})
+      const userData = res.data;
+      // Only override username for predefined comments (system users)
+      if (systemUserIds.includes(userData._id)) {
+        userData.username = "Der Nachrichtensprecher";
+      }
+      setUser(userData);
+    };
+    fetchUser();
+  }, [comment.userId, systemUserIds])
 
   
       
@@ -105,7 +125,7 @@ function CommentSA ({post, comment, isDetail, classes }) {
     return (
       <p className={classes.commentText}>
         <div className={classes.comment}>
-        <Link  style={{textDecoration: 'none', color: COLORS.textColor, fontWeight: 'bold', cursor:'default'}} >{"@"+item.username}</Link>
+        <Link  style={{textDecoration: 'none', color: COLORS.textColor, fontWeight: 'bold', cursor:'default'}} >{"@"+(user.username || item.username)}</Link>
         <br />
         <div dangerouslySetInnerHTML={{ __html: item.body }} />
         {/*{ parse(item.body) }{'   '}*/}
