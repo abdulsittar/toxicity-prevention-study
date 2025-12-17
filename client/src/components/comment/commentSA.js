@@ -7,6 +7,7 @@ import Avatar from '@material-ui/core/Avatar'
 import Icon from '@material-ui/core/Icon'
 import PropTypes from 'prop-types';
 import { format } from 'timeago.js';
+import * as timeago from 'timeago.js';
 import axios from "axios";
 import { withStyles } from '@material-ui/core/styles';
 import {Link} from 'react-router-dom'
@@ -17,6 +18,27 @@ import Linkify from 'react-linkify';
 import parse from 'html-react-parser';
 import { COLORS } from "../values/colors";
 import { Cursor } from "mongoose";
+
+const deLocale = (number, index) => {
+  return [
+    ['gerade eben', 'jetzt'],
+    ['vor %s Sekunden', 'in %s Sekunden'],
+    ['vor 1 Minute', 'in 1 Minute'],
+    ['vor %s Minuten', 'in %s Minuten'],
+    ['vor 1 Stunde', 'in 1 Stunde'],
+    ['vor %s Stunden', 'in %s Stunden'],
+    ['vor 1 Tag', 'in 1 Tag'],
+    ['vor %s Tagen', 'in %s Tagen'],
+    ['vor 1 Woche', 'in 1 Woche'],
+    ['vor %s Wochen', 'in %s Wochen'],
+    ['vor 1 Monat', 'in 1 Monat'],
+    ['vor %s Monaten', 'in %s Monaten'],
+    ['vor 1 Jahr', 'in 1 Jahr'],
+    ['vor %s Jahren', 'in %s Jahren']
+  ][index];
+};
+
+timeago.register('de', deLocale);
 
 function CommentSA ({post, comment, isDetail, classes }) {
   const desc = useRef();
@@ -30,6 +52,8 @@ function CommentSA ({post, comment, isDetail, classes }) {
   const [isDislikedByOne, setIsDislikedByOne] = useState(false);
   const [user, setUser] = useState({});
   const [systemUserIds, setSystemUserIds] = useState([]);
+  const [usernameMapping, setUsernameMapping] = useState({});
+  const [profilePictureMapping, setProfilePictureMapping] = useState({});
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const isMobileDevice = useMediaQuery({ query: "(min-device-width: 480px)"});
@@ -44,6 +68,8 @@ function CommentSA ({post, comment, isDetail, classes }) {
         const token = localStorage.getItem('token');
         const res = await axios.get('/users/system-users', {headers: { 'auth-token': token }});
         setSystemUserIds(res.data.systemUserIds);
+        setUsernameMapping(res.data.usernameMapping || {});
+        setProfilePictureMapping(res.data.profilePictureMapping || {});
       } catch (err) {
         console.error('Error fetching system user IDs', err);
       }
@@ -64,20 +90,27 @@ function CommentSA ({post, comment, isDetail, classes }) {
   }, [currentUser._id, comment.likes, comment.dislikes]);
 
   useEffect(() => {
-    if (systemUserIds.length === 0) return; // Wait for system user IDs to load
+    // Wait for system user IDs and mappings to load
+    if (systemUserIds.length === 0 || Object.keys(usernameMapping).length === 0) return;
     
     const token = localStorage.getItem('token');
     const fetchUser = async () => {
       const res = await axios.get(`/users?userId=${comment.userId._id || comment.userId}`, {headers: { 'auth-token': token }})
       const userData = res.data;
-      // Only override username for predefined comments (system users)
+      
+      // Override username and profile picture for system users with real user data from DB
       if (systemUserIds.includes(userData._id)) {
-        userData.username = "Der Nachrichtensprecher";
+        if (usernameMapping[userData._id]) {
+          userData.username = usernameMapping[userData._id];
+        }
+        if (profilePictureMapping[userData._id]) {
+          userData.profilePicture = profilePictureMapping[userData._id];
+        }
       }
       setUser(userData);
     };
     fetchUser();
-  }, [comment.userId, systemUserIds])
+  }, [comment.userId, systemUserIds, usernameMapping, profilePictureMapping])
 
   
       
@@ -139,7 +172,7 @@ function CommentSA ({post, comment, isDetail, classes }) {
         <span className={classes.commentLikeCounter}>{dislike}</span>
         </div>
         <span className={classes.postDate}></span>
-          {format(item.createdAt)}
+          {format(item.createdAt, 'de')}
          {
             //<button className={classes.sendButton} type="submit" >Delete</button>
             //<Icon className={classes.dltButton}>Delete</Icon>
@@ -160,7 +193,16 @@ function CommentSA ({post, comment, isDetail, classes }) {
         { 
         <Linkify>
         <CardHeader
-        avatar={<Link style={{textDecoration: 'none', color: COLORS.textColor}} ><Avatar className={classes.smallAvatar} src={comment.userId["profilePicture"]? PF + comment.userId["profilePicture"]: PF + currentUser.profilePicture} /></Link>}
+        avatar={<Link style={{textDecoration: 'none', color: COLORS.textColor}} >
+          <Avatar 
+            className={classes.smallAvatar} 
+            src={
+              systemUserIds.includes(user._id) 
+                ? (profilePictureMapping[user._id] ? PF + profilePictureMapping[user._id] : PF + 'person/noAvatar.png')
+                : (user.profilePicture ? PF + user.profilePicture : PF + 'person/noAvatar.png')
+            } 
+          />
+        </Link>}
         title={commentBody(comment)}
         className={classes.cardHeader2}/>
         </Linkify>

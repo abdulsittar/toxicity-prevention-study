@@ -30,19 +30,58 @@
 
 function cleanFeedback(feedback = {}) {
   const REMOVE_PATTERNS = [
-   // German 🇩🇪 (generic + specific)
-    /^keine fehler\.?$/i,
-    /^keine .*inhalte\.?$/i,
-    /^keine .*beleidigungen\.?$/i,
-    /^keine .*bedrohungen\.?$/i,
-    /^keine .*angriffe.*\.?$/i,
-    /^keine .*festgestellt\.?$/i,
-    /^keine .*vorhanden\.?$/i,
-    /^keine .*erkannt\.?$/i,
-    /^keine .*\.?$/i,     
-    // Generic
+    // German 🇩🇪 - "keine" (none/no) patterns
+    /^keine\s+fehler\.?$/i,
+    /^keine\s+.*inhalte\.?$/i,
+    /^keine\s+.*beleidigungen\.?$/i,
+    /^keine\s+.*bedrohungen\.?$/i,
+    /^keine\s+.*angriffe.*\.?$/i,
+    /^keine\s+.*festgestellt\.?$/i,
+    /^keine\s+.*vorhanden\.?$/i,
+    /^keine\s+.*erkannt\.?$/i,
+    /^keine\s+.*probleme\.?$/i,
+    /^keine\.?$/i,
+    
+    // German - "kein/keinen" variations
+    /^kein(e|en)?\s+.*$/i,
+    
+    // German - "nicht" (not) patterns
+    /^nicht\s+vorhanden\.?$/i,
+    /^nicht\s+festgestellt\.?$/i,
+    /^nicht\s+erkannt\.?$/i,
+    /^nicht\s+toxisch\.?$/i,
+    /^nicht\s+zutreffend\.?$/i,
+    /^nicht\s+anwendbar\.?$/i,
+    /^nicht\s+relevant\.?$/i,
+    /^nichts\s+gefunden\.?$/i,
+    /^nichts\.?$/i,
+    
+    // German - positive/correct patterns
+    /^korrekt\.?$/i,
+    /^richtig\.?$/i,
+    /^in\s+ordnung\.?$/i,
+    /^alles\s+in\s+ordnung\.?$/i,
+    /^ok\.?$/i,
+    /^okay\.?$/i,
+    /^gut\.?$/i,
+    /^passt\.?$/i,
+    
+    // English patterns
     /^none\.?$/i,
-    /^$/ // empty string
+    /^no\s+issues?\.?$/i,
+    /^no\s+problems?\.?$/i,
+    /^not\s+found\.?$/i,
+    /^not\s+detected\.?$/i,
+    /^not\s+applicable\.?$/i,
+    /^not\s+relevant\.?$/i,
+    /^not\s+toxic\.?$/i,
+    /^correct\.?$/i,
+    /^fine\.?$/i,
+    /^good\.?$/i,
+    /^n\/?a\.?$/i,
+    
+    // Empty/whitespace
+    /^[\s\-\.]*$/
   ];
 
   return Object.fromEntries(

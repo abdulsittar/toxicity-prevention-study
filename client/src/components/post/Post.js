@@ -546,7 +546,7 @@ const triangleOverlayStyle = {
         {(repost > 0)? 
           <div className={classes.postTopLeft}>
             <Link  style={{textDecoration: 'none', color: COLORS.textColor}} >
-              <img src={repostUser.profilePicture ? PF + repostUser.profilePicture : PF + 'person/noAvatar.png'} alt="" className={classes.postProfileImg} />
+              <img src={PF + 'person/noAvatar.png'} alt="" className={classes.postProfileImg} />
             </Link>
             <Link style={{textDecoration: 'none', color: COLORS.textColor, cursor:'default'}}>
             <span className={classes.postUsername}>{repostUser.username}</span>
@@ -563,7 +563,7 @@ const triangleOverlayStyle = {
         
           <div className={classes.postTopLeft} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
             <Link  style={{textDecoration: 'none', color: COLORS.textColor, background: repost>0 ? "#F5F5F5" : "#ffffff"}} >
-              <img src={user.profilePicture ? PF + user.profilePicture : PF + 'person/noAvatar.png'} alt="" className={classes.postProfileImg} />
+              <img src={PF + 'person/noAvatar.png'} alt="" className={classes.postProfileImg} />
             </Link>
             <Link style={{textDecoration: 'none', color: COLORS.textColor, cursor:'default', background: repost>0 ? "#F5F5F5" : "#ffffff"}} >
             <span className={classes.postUsername}>
@@ -579,11 +579,24 @@ const triangleOverlayStyle = {
         </div>
         
         <div className={classes.postCenter} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
-          {/* Title (from desc field) - displayed in bold */}
-          <div className={classes.postText}  style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
-            <div className={classes.content}  style={{ 
-              fontWeight: 'bold',
-              fontSize: '16px',
+          {/* Title - displayed in bold */}
+          {post?.title && post.title.trim() !== '' && (
+            <div className={classes.postText} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
+              <div className={classes.content} style={{ 
+                fontWeight: 'bold',
+                fontSize: '16px',
+                marginBottom: '10px',
+                background: repost>0 ? "#F5F5F5" : "#ffffff" 
+              }} dangerouslySetInnerHTML={{ __html: post?.title }}> 
+              </div> 
+            </div>
+          )}
+
+          {/* Post body (desc) - displayed in normal weight */}
+          <div className={classes.postText} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
+            <div className={classes.content} style={{ 
+              fontWeight: 'normal',
+              fontSize: '14px',
               background: repost>0 ? "#F5F5F5" : "#ffffff" 
             }} dangerouslySetInnerHTML={{ __html: post?.desc }}> 
             </div> 

@@ -808,6 +808,8 @@ router.put('/:id/read', verifyToken, async (req, res) => {
 // Get system user IDs for identifying predefined posts/comments
 router.get('/system-users', verifyToken, async (req, res) => {
     try {
+        const SelectedUser = require('../models/SelectedUser');
+        
         const systemUserIds = [
             process.env.Netflix,
             process.env.SkySport,
@@ -818,7 +820,41 @@ router.get('/system-users', verifyToken, async (req, res) => {
             process.env.handle
         ].filter(Boolean); // Remove any undefined values
         
-        res.status(200).json({ systemUserIds });
+        // Fetch real usernames and profile pictures from the SelectedUser collection
+        // Get a sample of available users to use for system comments
+        const availableUsers = await SelectedUser.find({ available: true }).limit(10).lean();
+        
+        console.log('Available users from DB:', availableUsers.length);
+        
+        // Fallback usernames and pictures if DB is empty
+        const fallbackUsers = [
+            { username: "rosa biene", profilePicture: "person/1.jpeg" },
+            { username: "schwarzer eigel", profilePicture: "person/2.jpeg" },
+            { username: "grüner fuchs", profilePicture: "person/3.jpeg" },
+            { username: "blauer wolf", profilePicture: "person/4.jpeg" }
+        ];
+        
+        // Use DB users if available, otherwise use fallback
+        const usersToUse = availableUsers.length > 0 ? availableUsers : fallbackUsers;
+        
+        // Create mappings for system users using real user data from DB
+        const usernameMapping = {};
+        const profilePictureMapping = {};
+        
+        systemUserIds.forEach((userId, index) => {
+            if (userId) {
+                // Cycle through available users
+                const userIndex = index % usersToUse.length;
+                const selectedUser = usersToUse[userIndex];
+                usernameMapping[userId] = selectedUser.username;
+                profilePictureMapping[userId] = selectedUser.profilePicture;
+            }
+        });
+        
+        console.log('Username mapping:', usernameMapping);
+        console.log('Profile picture mapping:', profilePictureMapping);
+        
+        res.status(200).json({ systemUserIds, usernameMapping, profilePictureMapping });
     } catch (err) {
         console.error('Error fetching system user IDs', { error: err.message });
         res.status(500).json({ error: 'Failed to fetch system user IDs' });

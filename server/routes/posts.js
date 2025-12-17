@@ -2838,6 +2838,7 @@ const envUserIds = Object.keys(envUsersMap).filter(Boolean);
           userId: toObjectId(postAuthorId),
           pool,
           reactorUser: [currentUserId], // first reactor
+          title: topic.label || "",  // Add title from topic.label
           desc: topic.post,
           webLinks: topic.link,
           content: "topic",
@@ -2924,6 +2925,7 @@ const envUserIds = Object.keys(envUsersMap).filter(Boolean);
           userId: postAuthorId,
           pool,
           reactorUser: [currentUserId],
+          title: topic.label || "",  // Add title from topic.label
           desc: topic.post,
           webLinks: topic.link,
           content: "topic",
