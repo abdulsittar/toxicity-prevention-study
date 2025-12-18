@@ -778,7 +778,7 @@ if (preProfile === " ") {
           </div>
     
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px', maxWidth: '800px', margin: '32px auto 0' }}>
-              <Button variant="contained" color="primary" onClick={() => handleContinue(posts[0])}> Continue </Button>
+              <Button variant="contained" color="primary" onClick={() => handleContinue(posts[0])}> Weiter </Button>
       </div>
     
           <Dialog open={openSurvey} onClose={() => setOpenSurvey(false)} maxWidth="sm" fullWidth>
@@ -820,9 +820,9 @@ if (preProfile === " ") {
       </DialogContent>
     
       <DialogActions>
-        <Button onClick={() => setOpenSurvey(false)}>Cancel</Button>
+        <Button onClick={() => setOpenSurvey(false)}>Abbrechen</Button>
         <Button variant="contained" color="primary" onClick={handleSubmitSurvey}>
-          Submit
+          Absenden
         </Button>
       </DialogActions>
     </Dialog>

@@ -722,7 +722,7 @@ const handleTopicSelectionSubmit = async () => {
           
           {/* TODO: Replace with new three-stage survey JSX */}
           <div className={classes.wrapper}>
-            <h1>Pre-survey</h1>
+            <h1>Vorbefragung</h1>
             
             {currentStage === 'consent' && (
   <div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -732,7 +732,7 @@ const handleTopicSelectionSubmit = async () => {
       align="center"
       style={{ marginBottom: '32px' }}
     >
-      TWON Research Study - Informed Consent
+      TWON-Forschungsstudie – Aufklärung und Einwilligung
     </Typography>
 
     {/* Introductory text */}
@@ -895,15 +895,15 @@ const handleTopicSelectionSubmit = async () => {
             
             {currentStage === 'demographics' && (
               <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-                <Typography variant="h4" gutterBottom align="center" style={{ marginBottom: '32px' }}>
+                {/*<Typography variant="h4" gutterBottom align="center" style={{ marginBottom: '32px' }}>
                   {ONETIME_INTRO}
-                </Typography>
+                </Typography>*/}
                 
                 {/* --- Demographics Section (updated) --- */}
 <Paper elevation={2} style={{ padding: '32px', marginBottom: '24px' }}>
   {/* 1.1 Prolific ID */}
   <Typography variant="h5" gutterBottom style={{ marginBottom: '16px', color: '#1976d2' }}>
-    1.1 Prolific ID
+    Prolific ID
   </Typography>
   <Typography variant="body1" style={{ marginBottom: '12px' }}>
     Bitte geben Sie unten Ihre Prolific-ID ein (wird nur zur Teilnahmebestätigung verwendet und nicht mit Antworten verknüpft):  </Typography>
@@ -925,7 +925,7 @@ const handleTopicSelectionSubmit = async () => {
 
   {/* 1.2 Demographic Information */}
   <Typography variant="h5" gutterBottom style={{ marginBottom: '16px', color: '#1976d2' }}>
-    1.2 Demografische Informationen
+    Demografische Informationen
   </Typography>
   <Typography variant="body1" style={{ marginBottom: '24px' }}>
     Bitte beantworten Sie die folgenden statistischen Fragen zur Ihrer Person, bevor Sie mit der Hauptaufgabe beginnen:
@@ -1011,7 +1011,7 @@ const handleTopicSelectionSubmit = async () => {
 
   {/* 1.3 Personality Test */}
   <Typography variant="h5" gutterBottom style={{ marginBottom: '16px', color: '#1976d2' }}>
-    1.3 Persönlichkeitstest
+    Persönlichkeitstest
   </Typography>
 
   <Typography variant="body1" style={{ marginBottom: '12px' }}>
@@ -1071,7 +1071,7 @@ const handleTopicSelectionSubmit = async () => {
   gutterBottom
   style={{ marginBottom: '16px', color: '#1976d2', textAlign: 'left' }}
 >
-  1.4  Erklärung des Experiments
+  Erklärung des Experiments
 </Typography>
 
 <Typography
@@ -1259,7 +1259,7 @@ Bevor Sie mit dem Kommentieren beginnen, haben Sie die Möglichkeit, einen Avata
             {currentStage === 'topicSelection' && (
   <div style={{ maxWidth: "800px", margin: "0 auto" }}>
     <Typography variant="h4" gutterBottom align="center" style={{ marginBottom: "16px" }}>
-      1.5 Themenauswahl
+      Themenauswahl
     </Typography>
     
     <Typography variant="body1" style={{ marginBottom: "24px", textAlign: "left", lineHeight: 1.6 }}>
@@ -1291,7 +1291,7 @@ Bevor Sie mit dem Kommentieren beginnen, haben Sie die Möglichkeit, einen Avata
         onClick={() => setCurrentStage("demographics")}
         style={{ marginRight: "16px", minWidth: "120px", padding: "12px 24px" }}
       >
-        Back
+        Zurück
       </Button>
 
       <Button
@@ -1301,7 +1301,7 @@ Bevor Sie mit dem Kommentieren beginnen, haben Sie die Möglichkeit, einen Avata
         disabled={selectedTopics.length !== 4}
         style={{ minWidth: "120px", padding: "12px 24px" }}
       >
-        Continue
+        Weitermachen
       </Button>
     </div>
   </div>
@@ -1379,10 +1379,10 @@ Bevor Sie mit dem Kommentieren beginnen, haben Sie die Möglichkeit, einen Avata
             {currentStage === 'userSelection' && (
               <div>
                 <Typography variant="h6" gutterBottom>
-                  Select Your Profile
+                  Wählen Sie Ihr Profil aus
                 </Typography>
                 <Typography variant="body2" style={{ marginBottom: 20 }}>
-                  Please choose one of the following user profiles to continue.
+                  Bitte wählen Sie eines der folgenden Benutzerprofile aus, um fortzufahren.
                 </Typography>
                 
                 
@@ -1442,7 +1442,7 @@ Bevor Sie mit dem Kommentieren beginnen, haben Sie die Möglichkeit, einen Avata
                           padding: '12px 24px'
                         }}
                       >
-                        Back
+                        Zurück
                       </Button>
                       <Button
                         variant="contained"
@@ -1454,7 +1454,7 @@ Bevor Sie mit dem Kommentieren beginnen, haben Sie die Möglichkeit, einen Avata
                           padding: '12px 24px'
                         }}
                       >
-                        Continue
+                        Weiter
                       </Button>
                     </div>
                   </div>

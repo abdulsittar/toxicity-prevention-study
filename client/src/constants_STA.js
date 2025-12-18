@@ -7,7 +7,7 @@
 // ===================================================================
 
 // Consent form headings and introductory text
-export const CONSENT_WELCOME = "TWON Research Study - Informed Consent";
+export const CONSENT_WELCOME = "TWON-Forschungsstudie – Einverständniserklärung";
 export const CONSENT_INTRODUCTION = "We invite you to participate in a research study about social media and political discussions. Please read the following information carefully before deciding whether to participate.";
 
 // Study information sections
@@ -67,8 +67,8 @@ export const PERSONALITY_INSTRUCTIONS =
 
 
 // Consent form buttons
-export const CONSENT_AGREE = "Yes, I agree to participate";
-export const CONSENT_DISAGREE = "No, I do not wish to participate";
+export const CONSENT_AGREE = "Ja, ich stimme der Teilnahme zu.";
+export const CONSENT_DISAGREE = "Nein, ich möchte nicht teilnehmen.";
 
 // Contact information
 export const CONSENT_CONTACT_TITLE = "Contact Information";
@@ -205,10 +205,10 @@ export const WEEKLY_COWORKER_SCALE = "0 = Very unhappy, 10 = Very happy";
 // ===================================================================
 
 // Navigation buttons
-export const BTN_NEXT = "Next";
-export const BTN_PREVIOUS = "Previous";
-export const BTN_SUBMIT = "Submit";
-export const BTN_CONTINUE = "Continue";
+export const BTN_NEXT = "Weiter";
+export const BTN_PREVIOUS = "Zurück";
+export const BTN_SUBMIT = "Absenden";
+export const BTN_CONTINUE = "Weiter";
 
 // Progress indicators
 export const PROGRESS_CONSENT = "Consent Form";

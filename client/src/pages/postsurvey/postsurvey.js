@@ -179,7 +179,7 @@ function Postsurvey({ classes }) {
           <>
             {/* 3.3 Feedback / Debriefing */}
             <Typography variant="h5" gutterBottom style={{ color: "#1976d2", marginTop: "24px" }}>
-              3.3  Debriefing
+              Debriefing
             </Typography>
 
             <TextField

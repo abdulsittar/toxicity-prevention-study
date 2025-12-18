@@ -24,7 +24,7 @@ export default function CommentEditModal({
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Edit your comment</DialogTitle>
+      <DialogTitle>Kommentar bearbeiten</DialogTitle>
 
       <DialogContent>
         {/* Editable field */}
@@ -79,9 +79,9 @@ export default function CommentEditModal({
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>Abbrechen</Button>
         <Button variant="contained" onClick={handleSend}>
-          Save
+          Speichern
         </Button>
       </DialogActions>
     </Dialog>
