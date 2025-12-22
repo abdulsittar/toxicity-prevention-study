@@ -2911,7 +2911,7 @@ const envUserIds = Object.keys(envUsersMap).filter(Boolean);
       const topic = topicsData[topicId];
       if (!topic) continue;
 
-      let existingPost = await Post.findOne({ desc: topic.post });
+      let existingPost = await Post.findOne({ desc: topic.post }).sort({ createdAt: -1 });
       let savedPost;
 
       if (!existingPost || existingPost.reactorUser.length >= 5) {

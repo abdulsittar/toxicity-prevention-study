@@ -194,6 +194,7 @@ useEffect(() => {
   };
 
   socket.on('newComment', handleNewComment);
+  console.log("Socket on updateComment set in post.js");
   socket.on('updateComment', handleUpdateComment);
 
   return () => {
