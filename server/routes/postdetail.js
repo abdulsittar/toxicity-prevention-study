@@ -159,6 +159,15 @@ Geben Sie nur JSON zurück, mit genau dieser Form:
 
   } catch (err) {
     console.error(err);
+    
+    // If API quota exceeded or other error, return original text with empty feedback
+    if (err.status === 429 || err.code === 'insufficient_quota') {
+      return res.status(200).json({
+        paraphrasedText: text, // Return original text
+        feedback: {} // Empty feedback
+      });
+    }
+    
     res.status(500).json({ error: "Failed to process moderation request" });
   }
 });

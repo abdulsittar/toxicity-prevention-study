@@ -513,43 +513,43 @@ const handleTopicSelection = () => {
 const TOPICS_LIST = [
   {
     id: "0",
-    label: "Parteivorsitzende Weidel (AfD) — „Die Einstufung der AfD als extremistisch ist ein politischer Angriff auf die Demokratie."
+    label: "Parteivorsitzende Weidel (AfD) — Die Einstufung der AfD als extremistisch ist ein politischer Angriff auf die Demokratie."
   },
   {
     id: "1",
-    label: "Vorsitzende der Grünen Jugend Nietzard (Die Grünen) — „Wir sollten die AfD mit Waffen bekämpfen."
+    label: "Vorsitzende der Grünen Jugend Nietzard (Die Grünen) — Wir sollten die AfD mit Waffen bekämpfen."
   },
   {
     id: "2",
-    label: "Wirtschafts- und Energieminister Reiche (CDU) — „Wir müssen die Förderung für Wärmepumpen beenden."
+    label: "Wirtschafts- und Energieminister Reiche (CDU) — Wir müssen die Förderung für Wärmepumpen beenden."
   },
   {
     id: "3",
-    label: "Bundeskanzler Merz (CDU) — „Familiennachzug aussetzen, um unsere Gemeinden zu schützen."
+    label: "Bundeskanzler Merz (CDU) — Familiennachzug aussetzen, um unsere Gemeinden zu schützen."
   },
   {
     id: "4",
-    label: "Bundeskanzler Merz (CDU) — „Wir werden keine Vermögenssteuer einführen."
+    label: "Bundeskanzler Merz (CDU) — Wir werden keine Vermögenssteuer einführen."
   },
   {
     id: "5",
-    label: "Bundestagspräsidentin Klöckner (CDU) — „Keine Regenbogenflaggen während des Pride-Monats."
+    label: "Bundestagspräsidentin Klöckner (CDU) — Keine Regenbogenflaggen während des Pride-Monats."
   },
   {
     id: "6",
-    label: "Ex-Gesundheitsminister Lauterbach (SPD) — „Die Legalisierung von Cannabis ist der richtige Schritt."
+    label: "Ex-Gesundheitsminister Lauterbach (SPD) — Die Legalisierung von Cannabis ist der richtige Schritt."
   },
   {
     id: "7",
-    label: "Verteidigungsminister Pistorius (SPD) — „Militärausgaben erhöhen, um die Ukraine wirklich zu unterstützen."
+    label: "Verteidigungsminister Pistorius (SPD) — Militärausgaben erhöhen, um die Ukraine wirklich zu unterstützen."
   },
   {
     id: "8",
-    label: "Kulturminister Weimer (Unabhängig) — „Sprache ist kein Spielplatz."
+    label: "Kulturminister Weimer (Unabhängig) — Sprache ist kein Spielplatz."
   },
   {
     id: "9",
-    label: "Umweltminister Schneider (Die Grünen) — „Eine Erhöhung des Deutschlandtickets auf 63 € ist notwendig."
+    label: "Umweltminister Schneider (Die Grünen) — Eine Erhöhung des Deutschlandtickets auf 63 € ist notwendig."
   }
 ];
 

@@ -74,6 +74,9 @@ const [surveyResponses, setSurveyResponses] = useState({
   surprised: ""
 });
 const [currentSurveyPost, setCurrentSurveyPost] = useState(null);
+const [hasPendingLLMModal, setHasPendingLLMModal] = useState(false);
+const [hasCompletedCommentCycle, setHasCompletedCommentCycle] = useState(false);
+const [isProcessingComment, setIsProcessingComment] = useState(false);
 
 
 const handleFeedAction = async (e) => {
@@ -313,6 +316,7 @@ if (preProfile === " ") {
 
       if (res.data.length > 0) {
         setPosts(res.data);
+        setHasCompletedCommentCycle(false); // Reset for new post
         console.log("Fetched post for page", posts.length);
         setTotalPosts(res.data.length + page); // approximate total posts
       } else {
@@ -465,6 +469,7 @@ if (preProfile === " ") {
         setPosts([])
         console.log("✅ Setting posts. Count:", res.data.length); 
         setPosts(res.data)
+        setHasCompletedCommentCycle(false); // Reset for new post
         //setPosts((prevItems) => [...prevItems, ...res.data
             //.sort((p1,p2) => {return new Date(p2.createdAt) - new Date(p1.createdAt);})
         //]); 
@@ -586,6 +591,7 @@ function updateViewdPosts( post) {
   const handleSurveySubmit = () => {
     console.log("Survey Responses:", surveyResponses);
     setOpenSurvey(false);
+    setHasCompletedCommentCycle(false); // Reset for next post
     const surveySubmitted = currentSurveyPost.discussionResponses?.some(
       (r) => r.userId.toString() === user._id.toString()
     );
@@ -768,6 +774,18 @@ if (preProfile === " ") {
                   setHasReadArticle={setHasReadArticle}
                   currentRound={currentRound}
                   setProgress={setProgress}
+                  onCommentSubmitStart={() => {
+                    setHasCompletedCommentCycle(false);
+                    setIsProcessingComment(true);
+                  }}
+                  onLLMModalOpen={() => {
+                    setHasPendingLLMModal(true);
+                    setIsProcessingComment(false);
+                  }}
+                  onLLMModalClose={() => {
+                    setHasPendingLLMModal(false);
+                    setHasCompletedCommentCycle(true);
+                  }}
                 />
               ))
             ) : (
@@ -778,7 +796,14 @@ if (preProfile === " ") {
           </div>
     
           <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '32px', maxWidth: '800px', margin: '32px auto 0' }}>
-              <Button variant="contained" color="primary" onClick={() => handleContinue(posts[0])}> Weiter </Button>
+              <Button 
+                variant="contained" 
+                color="primary" 
+                onClick={() => handleContinue(posts[0])} 
+                disabled={isProcessingComment || hasPendingLLMModal || !hasCompletedCommentCycle}
+              > 
+                Weiter 
+              </Button>
       </div>
     
           <Dialog open={openSurvey} onClose={() => setOpenSurvey(false)} maxWidth="sm" fullWidth>
