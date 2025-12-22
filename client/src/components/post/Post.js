@@ -56,7 +56,7 @@ const srLatinLocale = (number, index) => {
  
 timeago.register('sr', srLatinLocale);
 
-function Post({onScrolling,  post, classes, isDetail, setHasReadArticle, currentRound, socket, setProgress}) {
+function Post({onScrolling,  post, classes, isDetail, setHasReadArticle, currentRound, socket, setProgress, onCommentSubmitStart, onLLMModalOpen, onLLMModalClose}) {
   const [comments, setComments] = useState([]);
   const inputEl = React.useRef<HTMLInputElement>(null);
  
@@ -71,6 +71,7 @@ function Post({onScrolling,  post, classes, isDetail, setHasReadArticle, current
   const [pendingComment, setPendingComment] = useState(null);
   const [pendingParaphrase, setPendingParaphrase] = useState("");
   const [pendingFeedback, setPendingFeedback] = useState({});
+  const [isProcessingComment, setIsProcessingComment] = useState(false);
   const [currentPost, setCurrentPost] = useState(post);
   const [repost, setRepost] = useState(post.reposts? post.reposts.length: 0);
   const [repostUser, setRepostUser] = useState({});
@@ -265,7 +266,11 @@ const submitHandler = async (e) => {
   const token = localStorage.getItem("token");
   const preValue= inputValue;
   if (removeHtmlTags(inputValue).trim().length === 0) return;
+  if (isProcessingComment) return; // Prevent multiple submissions
+  
     try {
+     setIsProcessingComment(true);
+     if (onCommentSubmitStart) onCommentSubmitStart();
      setProgress(30);
       const lc = await axios.post("/posts/" + post._id + "/comment", { userId: currentUser._id, username: currentUser.username, txt: inputValue, postId: post._id, headers: { 'auth-token': token } });
  setProgress(100);
@@ -292,9 +297,12 @@ try {
 
 setPendingFeedback(parsedFeedback);
       setEditModalOpen(true);
+      if (onLLMModalOpen) onLLMModalOpen();
+      setIsProcessingComment(false);
        
     } catch (err) {
       console.log("Error posting comment:", err);
+      setIsProcessingComment(false);
   }
 };
  
@@ -303,8 +311,11 @@ const onEnterSubmitHandler = async () => {
   const token = localStorage.getItem("token");
 const preValue= inputValue;
   if (removeHtmlTags(inputValue).trim().length === 0) return;
+  if (isProcessingComment) return; // Prevent multiple submissions
 
   try {
+  setIsProcessingComment(true);
+  if (onCommentSubmitStart) onCommentSubmitStart();
   setProgress(30);
     const lc = await axios.post(
       `/posts/${post._id}/comment`,
@@ -345,9 +356,12 @@ try {
 
 setPendingFeedback(parsedFeedback);
       setEditModalOpen(true);
+      if (onLLMModalOpen) onLLMModalOpen();
+      setIsProcessingComment(false);
 
   } catch (err) {
     console.error("Error posting comment", err);
+    setIsProcessingComment(false);
   }
 };
 
@@ -392,6 +406,7 @@ setProgress(30);
     }
 
     setEditModalOpen(false);
+    if (onLLMModalClose) onLLMModalClose();
   } catch (err) {
     console.error("Error updating comment:", err);
   }
@@ -657,11 +672,21 @@ const triangleOverlayStyle = {
           <div className={classes.txtnButtonRight} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
             <CardHeader
               avatar={<Avatar className={classes.smallAvatar} src={currentUser.profilePicture? PF + currentUser.profilePicture: PF + "person/noAvatar.png"} style={{ background: repost>0 ? "#ffffff" : "#ffffff" }} />}
-              title={<InputEmoji className={classes.shareInput} style={{ fontSize: "15", height: "40px", background: repost>0 ? "#ffffff" : "#ffffff" }} shouldReturn={true} value={inputValue}  onChange={handleChange}  onEnter={onEnterSubmitHandler} placeholder={Write_something} />}
+              title={<InputEmoji className={classes.shareInput} style={{ fontSize: "15", height: "40px", background: repost>0 ? "#ffffff" : "#ffffff" }} shouldReturn={true} value={inputValue}  onChange={handleChange}  onEnter={onEnterSubmitHandler} placeholder={Write_something} disabled={isProcessingComment} />}
               className={classes.cardHeader} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}/>
 
             <form class = "form">
-              <SendIcon className={classes.sendButton2} style={{ display:"flex", margin:"0px 20px"}} type="submit" onClick={submitHandler}/>
+              <SendIcon 
+                className={classes.sendButton2} 
+                style={{ 
+                  display:"flex", 
+                  margin:"0px 20px",
+                  opacity: isProcessingComment ? 0.5 : 1,
+                  cursor: isProcessingComment ? 'not-allowed' : 'pointer'
+                }} 
+                type="submit" 
+                onClick={isProcessingComment ? null : submitHandler}
+              />
             </form>
             </div>
             <div className={classes.commentTop} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
@@ -678,7 +703,10 @@ const triangleOverlayStyle = {
   open={editModalOpen}
   defaultValue={pendingParaphrase}
   feedback={pendingFeedback} // feedback from LLM
-  onClose={() => setEditModalOpen(false)}
+  onClose={() => {
+    setEditModalOpen(false);
+    if (onLLMModalClose) onLLMModalClose();
+  }}
   onSubmit={handleEditSubmit}
 />
     

@@ -820,11 +820,28 @@ router.get('/system-users', verifyToken, async (req, res) => {
             process.env.handle
         ].filter(Boolean); // Remove any undefined values
         
+        // Get current user's number to avoid duplication
+        let currentUserNumber = null;
+        try {
+            const currentUserId = req.user.userId; // From verifyToken middleware
+            const currentUser = await User.findById(currentUserId).lean();
+            if (currentUser && currentUser.username) {
+                // Extract number from username like "rosa biene 45"
+                const match = currentUser.username.match(/\s+(\d+)$/);
+                if (match) {
+                    currentUserNumber = parseInt(match[1]);
+                }
+            }
+        } catch (err) {
+            console.log('Could not get current user number:', err.message);
+        }
+        
         // Fetch real usernames and profile pictures from the SelectedUser collection
         // Get a sample of available users to use for system comments
         const availableUsers = await SelectedUser.find({ available: true }).limit(10).lean();
         
         console.log('Available users from DB:', availableUsers.length);
+        console.log('Current user number to avoid:', currentUserNumber);
         
         // Fallback usernames and pictures if DB is empty
         const fallbackUsers = [
@@ -837,6 +854,15 @@ router.get('/system-users', verifyToken, async (req, res) => {
         // Use DB users if available, otherwise use fallback
         const usersToUse = availableUsers.length > 0 ? availableUsers : fallbackUsers;
         
+        // Helper function to generate a random number (10-99) that's not the current user's number
+        const generateRandomNumber = () => {
+            let num;
+            do {
+                num = Math.floor(Math.random() * 90) + 10; // Random number between 10-99
+            } while (num === currentUserNumber);
+            return num;
+        };
+        
         // Create mappings for system users using real user data from DB
         const usernameMapping = {};
         const profilePictureMapping = {};
@@ -846,7 +872,12 @@ router.get('/system-users', verifyToken, async (req, res) => {
                 // Cycle through available users
                 const userIndex = index % usersToUse.length;
                 const selectedUser = usersToUse[userIndex];
-                usernameMapping[userId] = selectedUser.username;
+                
+                // Add random number to username
+                const randomNumber = generateRandomNumber();
+                const usernameWithNumber = `${selectedUser.username} ${randomNumber}`;
+                
+                usernameMapping[userId] = usernameWithNumber;
                 profilePictureMapping[userId] = selectedUser.profilePicture;
             }
         });

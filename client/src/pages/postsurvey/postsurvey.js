@@ -30,18 +30,18 @@ function Postsurvey({ classes }) {
     setManipulationValues(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  // Check if all required fields are filled
-  useEffect(() => {
+  // Check if page 1 is complete
+  const isPage1Complete = () => {
     const usabilityFilled = usabilityValues.q1 && usabilityValues.q2;
     const manipulationFilled = Object.values(manipulationValues).every(val => val !== "");
-    
-    if (usabilityFilled && manipulationFilled && currentPage === 1) {
-      // Automatically move to page 2
-      setTimeout(() => {
-        setCurrentPage(2);
-      }, 300);
+    return usabilityFilled && manipulationFilled;
+  };
+
+  const handleNextPage = () => {
+    if (isPage1Complete()) {
+      setCurrentPage(2);
     }
-  }, [usabilityValues, manipulationValues, currentPage]);
+  };
 
   const handleSubmit = async () => {
     try {
@@ -172,6 +172,17 @@ function Postsurvey({ classes }) {
             </div>
           ))}
         </FormControl>
+
+        {/* Next button for page 1 */}
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ marginTop: "24px" }}
+          onClick={handleNextPage}
+          disabled={!isPage1Complete()}
+        >
+          Weiter
+        </Button>
           </>
         )}
 
