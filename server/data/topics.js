@@ -2,7 +2,7 @@ module.exports = {
   "0": {
     label: "Parteivorsitzende Weidel – Einstufung der AfD als extremistisch",
     post: "Der Verfassungsschutz hat die AfD als extremistische Partei eingestuft. Die AfD-Bundessprecher Alice Weidel und Tino Chrupalla erklärten die Entscheidung für klar politisch motiviert und einen schweren Schlag für die deutsche Demokratie.",
-    link: "https://www.bbc.com/news/articles/cwy6zk9wkrdo",
+    link: "https://www.tagesschau.de/inland/innenpolitik/afd-verfassungsschutz-rechtsextremismus-100.html",
     comments: [
       "Nazis bekommen, was sie verdienen. Jeder, der die AfD unterstützt, gehört ins Gefängnis.",
       "Die AfD als extremistisch zu bezeichnen zeigt nur, wie politisch voreingenommen dieser Staat ist."
@@ -12,7 +12,7 @@ module.exports = {
   "1": {
     label: "Grüne-Jugend-Vorsitzende Nietzard – Politische Gewalt gegendie AfD",
     post: "Die Vorsitzende der Grünen Jugend, Jette Nietzard, ruft öffentlich zum Einsatz bewaffneter Gewalt gegen die ",
-    link: "https://europeanconservative.com/articles/news-corner/grune-jugend-nietzard-armed-opposition-afd-government/",
+    link: "https://www.welt.de/politik/deutschland/article68885890893b255c80dafc08/gruene-jugend-chefin-vielleicht-mit-waffen-nietzard-stellt-frage-nach-widerstand-gegen-moegliche-afd-regierung.html",
     comments: [
       "Der Aufruf zu Gewalt zeigt, wie gefährlich diese Leute wirklich sind.",
       "Wenn friedliche Mittel nichts bringen, darf man sich nicht wundern, dass radikalere Stimmen lauter werden."
@@ -22,7 +22,7 @@ module.exports = {
   "2": {
     label: " Ministerin (Wirtschaft und Energie) Reiche – Förderung für Wärmepumpen",
     post: "Die Bundesregierung plant, die Förderung für Wärmepumpen rückgängig zu machen. Wir müssen dieses Betriebsverbot abschaffen, um wieder Ruhe in den Markt zu bringen.",
-    link: "https://www.politico.eu/article/heat-pumps-exploded-germany-ruling-coalition-green-law/",
+    link: "https://www.tagesschau.de/wirtschaft/energie/reiche-monitoring-100.html",
     comments: [
       "Klimaschutz darf nicht auf Kosten der normalen Bevölkerung gehen.",
       "Fossile Konzerne haben jahrzehntelang profitiert – jetzt ist Umdenken nötig."
@@ -32,7 +32,7 @@ module.exports = {
   "3": {
     label: "Kanzler Merz – Migrationskontrolle",
     post: "Merz hat angekündigt, den Familiennachzug für Hunderttausende von Menschen in Deutschland auszusetzen, darunter viele Migranten aus Syrien. Außerdem wird ein Aufnahmeprogramm für besonders schutzbedürftige Afghanen gestoppt",
-    link: "https://www.politico.eu/article/germany-is-now-leading-the-charge-on-europes-anti-immigration-turn/",
+    link: "https://www.tagesschau.de/inland/innenpolitik/unionsfraktion-antraege-migrationspolitik-100.html",
     comments: [
       "Deutschland kann nicht die Probleme der ganzen Welt lösen.",
       "Humanität endet offenbar dort, wo es unbequem wird."
@@ -42,7 +42,7 @@ module.exports = {
   "4": {
     label: "Kanzler Merz – Vermögenssteuer",
     post: "Merz schließt die Einführung einer Vermögenssteuer in Deutschland aus.",
-    link: "https://www.iamexpat.de/expat-info/germany-news/merz-rules-out-introducing-wealth-tax-germany",
+    link: "https://www.br.de/nachrichten/wirtschaft/hoehere-steuern-fuer-reiche-wer-will-was-in-der-regierung,UuEDBmq",
     comments: [
       "Reiche werden geschützt, während der Mittelstand leidet.",
       "Leistung darf nicht bestraft werden – Vermögenssteuer ist der falsche Weg."

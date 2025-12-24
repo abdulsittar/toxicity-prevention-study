@@ -579,7 +579,7 @@ const triangleOverlayStyle = {
         
           <div className={classes.postTopLeft} style={{ background: repost>0 ? "#F5F5F5" : "#ffffff" }}>
             <Link  style={{textDecoration: 'none', color: COLORS.textColor, background: repost>0 ? "#F5F5F5" : "#ffffff"}} >
-              <img src={PF + 'person/noAvatar.png'} alt="" className={classes.postProfileImg} />
+              <img src={user.profilePicture ? PF + user.profilePicture : PF + 'person/noAvatar.png'} alt="" className={classes.postProfileImg} />
             </Link>
             <Link style={{textDecoration: 'none', color: COLORS.textColor, cursor:'default', background: repost>0 ? "#F5F5F5" : "#ffffff"}} >
             <span className={classes.postUsername}>
