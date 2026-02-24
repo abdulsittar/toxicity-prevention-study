@@ -82,4 +82,8 @@ When started on your server, backend logs may show entries similar to:
 - `Server started on port 1077 and https://socialapp.ijs.si/`
 - `Connected to the database successfully!`
 
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
+
 
