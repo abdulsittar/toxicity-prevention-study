@@ -1,82 +1,85 @@
-Website : [(https://socialapp.ijs.si/)](https://socialapp.ijs.si/)
+# Toxicity Prevention Study Platform
 
-# TWON Social Application
-A MERN stack based social media application (MongoDB Express React Redux NodeJs).
+This repository contains a web platform used for a study on toxicity prevention in online commenting.
+Participants move through a fixed sequence of pages, interact with LLM-based comment suggestions, and complete pre/post study questionnaires.
 
-# Featurs included in this project:
+Website: [https://socialapp.ijs.si/](https://socialapp.ijs.si/)
 
-**Admin features:**
- - admin panel shows total number of post ,users, and comments.
- - admin can create, edit, and delete posts, users, and comments. 
- - admin can like, dislike comments, and posts. 
+## Participant Flow
 
-**user features:**
- - register and login users. 
- - pagination on every pages.
- - light and dark mode.
- - admin panel is included.
- - explore page to view other posts by random users.
- - profile page.
- - edit profile page user data.
- - password is stored in database in encrypted format with salt.
- - create posts.
- - like, dislike, and comment on posts.
- - like, and dislike a comment.
- - followings.
- - followers.
- - recording viewed posts by users.
- - recording read posts by users.
- - profile page shows user details and posts with following and followers menu.
+1. Landing page
+2. Consent form
+3. Pre-survey
+4. Topic selection (choose 4 topics)
+5. Username selection
+6. Feed and per-post interaction loop:
+    - You are shown one post/article at a time
+    - You write a comment for that post
+    - The system provides an LLM suggestion to reduce toxicity
+    - You accept or reject the suggestion
+    - You complete a questionnaire for that specific post
+    - You are then moved to the next post
+7. Repeat this loop until all 4 posts (from the 4 selected topics) are completed
+8. After the 4th post questionnaire, you are redirected to the post-survey
 
+## App Structure
 
-**How to run this application**
-1. Make sure MongoDB is running on your system or online.
-2. Include MongoDB database link in .env file.
-3. Include public and private keys for push notifications.
-4. Clone this repository
-5. Open command line in the cloned folder,
-    - To install dependencies for backend, run  `npm install` in `/server` folder.
-    - To run backend type command `npm start` in main folder.
-    - To install dependencies for frontend , run  `npm install` in `/client` folder.
-    - To run frontend type command `npm run build` in `/client` folder.
-6.  Open  [localhost:3000](http://localhost:3000/)  in the browser.
- **And application will be up and running.**
+- `client/`: React frontend for participant flow pages and feed interactions
+- `server/`: Node/Express backend, APIs, and MongoDB models
+- `server/routes/`: API route definitions
+- `server/controllers/`: request handlers and study logic
+- `server/models/`: MongoDB schemas for users, posts, surveys, and interaction data
+- `screenshots/toxicity screenshots/`: UI screenshots used in this README
 
-# Screenshots showcasing the desktop view:
-![login page](screenshots/2-Theme1And2-Login-Web.png)
-![registration page](screenshots/1-Theme1And2-Signup-Web.png)
+## Screenshots by Study Step
 
+### 1) Landing Page
+![Landing Page](screenshots/toxicity%20screenshots/landingpage.png)
 
-# The desktop view with dark mode:
-![home page](screenshots/3-Theme1-Home-Web.png)
-![post detail](screenshots/4-Theme1-Post-detail-Web.png)
-![profile page](screenshots/5-Theme1-Profile-Scroll1-Web.png)
-![profile page](screenshots/6-Theme1-Profile-Scroll2-Web.png)
+### 2) Consent Form
+![Consent Form](screenshots/toxicity%20screenshots/consent.png)
 
+### 3) Pre-Survey
+![Pre-Survey](screenshots/toxicity%20screenshots/presurvey.png)
 
-# The desktop view with light mode:
-![home page](screenshots/7-Theme2-Home-Web.png)
-![post detail](screenshots/8-Theme2-Post-detail-Web.png)
-![profile page](screenshots/9-Theme2-Profile-Scroll1-Web.png)
-![profile page](screenshots/10-Theme2-Profile-Scroll2-Web.png)
+### 4) Topic Selection
+![Choose Topics](screenshots/toxicity%20screenshots/topics.png)
 
+### 5) Username Selection
+![Choose Username](screenshots/toxicity%20screenshots/username.png)
 
-# The mobile view:
-![login page](screenshots/13-Theme2And1-Login-Mobile.jpg)
-![registration page](screenshots/11-Theme2And1-Signup-Scroll1-Mobile.jpg)
-![registration page](screenshots/12-Theme2And1-Signup-Scroll2-Mobile.jpg)
+### 6) Feed
+![Feed](screenshots/toxicity%20screenshots/feed.png)
 
-# The mobile view with dark mode:
-![home page](screenshots/14-Theme1-Home-Mobile.jpg)
-![post detail](screenshots/15-Theme1-Post-Detail-Mobile.jpg)
-![profile page](screenshots/16-Theme1-Profile-Scroll1-Mobile.jpg)
-![profile page](screenshots/17-Theme1-Profile-Scroll2-Mobile.jpg)
+### 7) Comment Editing with LLM Suggestion
+![Comment Suggestion Intervention](screenshots/toxicity%20screenshots/comment_changing_suggestion.png)
 
+### 8) Post/Article Questionnaire
+![Article Questionnaire](screenshots/toxicity%20screenshots/article_questionaire.png)
 
-# The mobile view with light mode:
-![home page](screenshots/18-Theme2-Home-Mobile.jpg)
-![post detail](screenshots/19-Theme2-Post-Detail-Mobile.jpg)
-![profile page](screenshots/20-Theme2-Profile-Scroll1-Mobile.jpg)
-![profile page](screenshots/21-Theme2-Profile-Scroll2-Mobile.jpg)
+### 9) Post-Survey
+![Post-Survey](screenshots/toxicity%20screenshots/postsurvey.png)
+
+## Local Development (Quick Start)
+
+1. Ensure MongoDB is running and environment variables are configured.
+2. Install server dependencies:
+    - `cd server && npm install`
+3. Install client dependencies:
+    - `cd client && npm install`
+4. Run server and client (in separate terminals):
+    - Server: `cd server && npm start`
+    - Client: `cd client && npm run build`
+
+## Deployment Note
+
+The production deployment is available on:
+
+- [https://socialapp.ijs.si/](https://socialapp.ijs.si/)
+
+When started on your server, backend logs may show entries similar to:
+
+- `Server started on port 1077 and https://socialapp.ijs.si/`
+- `Connected to the database successfully!`
 
 
