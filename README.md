@@ -1,9 +1,12 @@
 # Toxicity Prevention Study Platform
 
-This repository contains a web platform used for a study on toxicity prevention in online commenting.
-Participants move through a fixed sequence of pages, interact with LLM-based comment suggestions, and complete pre/post study questionnaires.
-
-Website: [https://socialapp.ijs.si/](https://socialapp.ijs.si/)
+This tool is designed to study incivility in online debates and to test whether AI-based interventions can improve the quality of discussions in realistic social network environments. It allows researchers to examine how toxic or uncivil comments emerge and how they influence broader conversation dynamics.
+ 
+In this case study, the platform was used to test an AI-assisted paraphrasing intervention. When users wrote potentially uncivil comments, they were provided with an alternative, AI-generated paraphrased version designed to reduce toxicity while preserving the original meaning. Users could then decide whether to post their original comment or accept the suggested revision.
+ 
+The study evaluated whether these AI-supported interventions reduced toxicity at both the individual and conversation levels. Toxicity was measured using automated scoring (e.g., via Perspective API), capturing dimensions such as general toxicity, severe toxicity, insults, profanity, threats, and identity attacks. Results showed that paraphrased comments were significantly less toxic than the original versions.
+ 
+Importantly, the tool also allows researchers to examine downstream effects. The findings indicate that when users accept AI-generated paraphrases, not only does their own comment become less toxic, but the overall tone of subsequent discussion improves as well. This makes the platform suitable for testing proactive, user-centered, and non-intrusive AI interventions aimed at fostering healthier online discourse in realistic social media settings.
 
 ## Participant Flow
 
